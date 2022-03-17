@@ -33,3 +33,7 @@ def viewpost():
 @app.get('/createpost')
 def createpost():
     return render_template('createpost.html')
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
