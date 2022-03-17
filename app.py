@@ -3,12 +3,12 @@ from flask import Flask, redirect, render_template, request
 app = Flask(__name__)
 
 @app.get('/')
-def home():
+def index():
     return render_template('index.html')
 
 
 @app.get('/home')
-def index():
+def home():
     return render_template('home.html')
 
 
