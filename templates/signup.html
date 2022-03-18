@@ -4,36 +4,44 @@
 
 {% block body %}
 
-<form>
-    <!--First name and last name field-->
-    <div class="input-group mb-3">
-        <span class="input-group-text">First and last name</span>
-        <input type="text" aria-label="First name" class="form-control">
-        <input type="text" aria-label="Last name" class="form-control">
-    </div>
+<div class="container">
+    <div class="row align-items-start">
+        <div class="col">
+            <img src="static/assets/icons.png" alt="Icon Image">
+        </div>
 
-    <!--Email field-->
-    <div class="mb-3">
-        <label for="signUpEmail" class="form-label">Email address</label>
-        <input type="email" class="form-control" id="signUpEmail" aria-describedby="emailHelp" required>
-    </div>
+        <div class="col-md-auto">
+            <h1>Ready to hear some cool vibes?</h1>
+            <h2>Sign up for a free account</h2>
+            <form autocomplete="off">
+                <!--First name and last name field-->
+                <div class="input-group mb-3">
+                    <input type="text" aria-label="First name" class="form-control" placeholder="First name" required>
+                    <input type="text" aria-label="Last name" class="form-control" placeholder="Last name" required>
+                </div>
 
-    <!--Password field-->
-    <div class="mb-3">
-        <label for="signUpPassword" class="form-label">Password</label>
-        <input type="password" class="form-control" id="signUpPassword" aria-describedby="passwordHelpBlock" required>
-        <div id="passwordHelpBlock" class="form-text">
-            Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
+                <!--Email field-->
+                <div class="mb-3">
+                    <input type="email" class="form-control" id="signUpEmail" aria-describedby="emailHelp" placeholder="Email address" required>
+                </div>
+
+                <!--Password field-->
+                <div class="mb-3">
+                    <input type="password" class="form-control" id="signUpPassword" aria-describedby="passwordHelpBlock" placeholder="Password" required>
+                </div>
+
+                <!--Password comfirmation field-->
+                <div class="mb-3">
+                    <input type="password" class="form-control" id="comfirmSignUpPassword" aria-describedby="passwordHelpBlock" placeholder="Comfirm password" required>
+                </div>
+
+                <!--Sign up button-->
+                <button type="submit" class="btn btn-outline-primary">Sign up</button>
+
+                <!--Got back to login button-->
+                <button type="button" class="btn btn-outline-primary" id="haveAccount">Sign in</button>
+            </form>
         </div>
     </div>
-
-    <!--Password comfirmation field-->
-    <div class="mb-3">
-        <label for="comfirmSignUpPassword" class="form-label">Comfirm password</label>
-        <input type="text" class="form-control" id="comfirmSignUpPassword" aria-describedby="passwordHelpBlock" required>
-    </div>
-
-    <!--Submitt button-->
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+</div>
 {% endblock %}
