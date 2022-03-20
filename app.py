@@ -14,10 +14,10 @@ def home():
 
 @app.get('/signin')
 def signin():
-    return render_template('signin.html', )
+    return render_template('signin.html')
 
 @app.get('/signup')
-def singup():
+def signup():
     return render_template('signup.html')
 
 @app.get('/profile')
