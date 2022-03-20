@@ -1,6 +1,6 @@
 from flask import Flask, redirect, render_template, request
 
-app = Flask(__name__)
+app = Flask(__name__) #static_url_path='/static' (??) (ignore)
 
 @app.get('/')
 def index():

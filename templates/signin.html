@@ -2,4 +2,30 @@
 
 {% block title %}{% endblock %}
 
-{% block body %}{% endblock %}
+{% block body %}
+
+<div class="container">
+    <div class="row align-items-start">
+        <div class="col" >
+            <br><br><br><br><br><br><br><br><br><br>
+            <h2>Sign in:</h2>
+            <form autocomplete="off">
+                <div class="mb-3" style = "width:80%">
+                    <input type="text" class="form-control" name="username" id="exampleFormControlInput1" placeholder="Username" style="border-color:Black">
+                </div>
+                <div class="mb-3" style = "width:80%">
+                    <input type="password" class="form-control" name="username" id="exampleFormControlInput1" placeholder="Password" style="border-color:Black">
+                </div>
+            </form>
+        </div>
+        <div class="col">
+            <img src="static/assets/icons.png"  alt="Icon Image">
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}
