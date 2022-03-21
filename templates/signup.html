@@ -1,5 +1,47 @@
 {% extends '_layout.html' %}
 
-{% block title %}{% endblock %}
+{% block title %}W.I.P.M || Sign up{% endblock %}
 
-{% block body %}{% endblock %}
+{% block body %}
+
+<div class="container">
+    <div class="row align-items-start">
+        <div class="col">
+            <img src="static/assets/icons.png" alt="Icon Image">
+        </div>
+
+        <div class="col-md-auto">
+            <h1>Ready to hear some cool vibes?</h1>
+            <h2>Sign up for a free account</h2>
+            <form action = "/submitSignUp" method = "post" autocomplete="off">
+                <!--First name and last name field-->
+                <div class="input-group mb-3">
+                    <input type="text" aria-label="First name" class="form-control" placeholder="First name" required>
+                    <input type="text" aria-label="Last name" class="form-control" placeholder="Last name" required>
+                </div>
+
+                <!--Email field-->
+                <div class="mb-3">
+                    <input type="email" class="form-control" id="signUpEmail" aria-describedby="emailHelp" placeholder="Email address" required>
+                </div>
+
+                <!--Password field-->
+                <div class="mb-3">
+                    <input type="password" class="form-control" id="signUpPassword" aria-describedby="passwordHelpBlock" placeholder="Password" required>
+                </div>
+
+                <!--Password comfirmation field-->
+                <div class="mb-3">
+                    <input type="password" class="form-control" id="comfirmSignUpPassword" aria-describedby="passwordHelpBlock" placeholder="Comfirm password" required>
+                </div>
+
+                <!--Sign up button-->
+                <button type="submit" class="btn btn-outline-primary">Sign up</button>
+
+                <!--Got back to login button-->
+                <button type="button" class="btn btn-outline-primary" action="/haveAccount">Sign in</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
