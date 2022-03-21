@@ -35,5 +35,11 @@ def createpost():
     return render_template('createpost.html')
 
 
+@app.post('/submitSignUp')
+def createUser():
+
+    return home()
+
+
 if __name__ == "__main__":
     app.run(debug=True)

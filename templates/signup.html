@@ -13,7 +13,7 @@
         <div class="col-md-auto">
             <h1>Ready to hear some cool vibes?</h1>
             <h2>Sign up for a free account</h2>
-            <form autocomplete="off">
+            <form action = "/submitSignUp" method = "post" autocomplete="off">
                 <!--First name and last name field-->
                 <div class="input-group mb-3">
                     <input type="text" aria-label="First name" class="form-control" placeholder="First name" required>
@@ -39,7 +39,7 @@
                 <button type="submit" class="btn btn-outline-primary">Sign up</button>
 
                 <!--Got back to login button-->
-                <button type="button" class="btn btn-outline-primary" id="haveAccount">Sign in</button>
+                <button type="button" class="btn btn-outline-primary" action="/haveAccount">Sign in</button>
             </form>
         </div>
     </div>
