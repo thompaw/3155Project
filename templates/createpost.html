@@ -4,6 +4,20 @@
 
 {% block body %}
 <div class="container">
-    
+    <h1>Create a post below</h1>
+    <form action="/createpost" method="post">
+        <!-- get the title and additional comments for the post-->
+        <input type="text" placeholder="Title" required>
+        <input type="text" placeholder="Caption"><br>
+
+        <select required>  
+            <!-- Have the user select a song from the list from our db -->
+            <!-- IMPLEMENT A search bar-->
+            {% for songid, songitem in selection.items() %}
+                <option value="songid">{{ songitem['title'] }} - {{ songitem['artist'] }}</option>
+            {% endfor %}
+        </select><br>
+        <input type="submit" value="Create!">
+    </form>
 </div> 
 {% endblock %}

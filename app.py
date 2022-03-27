@@ -5,7 +5,11 @@ app = Flask(__name__) #static_url_path='/static' (??) (ignore)
 # placeholder lists of dictionaries till sql implementation
 users = []  # each user has a 'name' and 'status'
 posts = []  # posts have a 'title', 'caption' and 'song'
-songlist = []  # songs have a 'title' and 'artist'
+# songs have a 'title' 'link' and 'artist'
+songdict = {'song1': {'title':'song1', 'link':'https://www.youtube.com/watch?v=5qap5aO4i9A', 'artist':'song1art'}, 
+            'song2': {'title':'song2', 'link':'https://www.youtube.com/watch?v=5qap5aO4i9A', 'artist':'song2art'}, 
+            'AAAAA': {'title':'SCALKS', 'link':'https://www.youtube.com/watch?v=lxoprelYHdo', 'artist':'formula1music'}}
+
 
 
 
@@ -36,21 +40,22 @@ def viewpost():
     # TODO figure out which post is being viewed, and find the corresponding user. 
     # TODO then find the song being listed in the post
     # TODO input these to the template
-    return render_template('viewpost.html', user= users[0], post= posts[0], song=songlist[0])
+    return render_template('viewpost.html', user=users[0], post=posts[0], song=songdict[0])
 
 @app.post('/createpost')
 def createpost():
-    return render_template('createpost.html')
+    # TODO grab inputs from the form
+    # TODO change into values, add to database
+    return viewpost()
 
 
 @app.get('/createpost')
-def createpost():
-    return render_template('createpost.html')
+def createpost_page():
+    return render_template('createpost.html', selection=songdict)
 
 
 @app.post('/submitSignUp')
 def createUser():
-
     return home()
 
 
