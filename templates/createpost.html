@@ -5,12 +5,12 @@
 {% block body %}
 <div class="container">
     <h1>Create a post below</h1>
-    <form action="/createpost" method="post">
+    <form action="/createpost" method="post" id="createform" name="createform">
         <!-- get the title and additional comments for the post-->
-        <input type="text" placeholder="Title" required>
-        <input type="text" placeholder="Caption"><br>
+        <input type="text" placeholder="Title" id="post_title" required>
+        <input type="text" placeholder="Caption" id="post_caption"><br>
 
-        <select required>  
+        <select required id="song_select">  
             <!-- Have the user select a song from the list from our db -->
             <!-- IMPLEMENT A search bar-->
             {% for songid, songitem in selection.items() %}
