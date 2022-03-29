@@ -19,12 +19,13 @@ songdict = {'song1': {'title':'song1', 'link':'https://www.youtube.com/watch?v=5
 
 @app.get('/')
 def index():
-    return render_template('index.html')
+    # TODO pull recent posts to display on the front page
+    return render_template('index.html', user=users['testuser'], postlist=posts)
 
 
 @app.get('/home')
 def home():
-    return render_template('home.html')
+    return redirect('/')
 
 
 @app.get('/signin')
