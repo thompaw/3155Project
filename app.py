@@ -2,6 +2,8 @@ from flask import Flask, redirect, render_template, request
 
 app = Flask(__name__) #static_url_path='/static' (??) (ignore)
 
+# This is a good idea, having this placeholder for now, but it may be easier in the future
+# to put all this into its repository module, so it's easier to refactor later
 # placeholder lists of dictionaries till sql implementation
 
 # each user has a 'name' and 'status'
@@ -22,7 +24,7 @@ def index():
     # TODO pull recent posts to display on the front page
     return render_template('index.html', user=users['testuser'], postlist=posts)
 
-
+# I'm not sure this route is really necessary
 @app.get('/home')
 def home():
     return redirect('/')
@@ -40,6 +42,7 @@ def signup():
 def profile():
     return render_template('profile.html')
 
+# Might be better and more uniform to follow the route naming convention in the PPT
 @app.get('/viewpost')
 def viewpost():
     # TODO figure out which post is being viewed, and find the corresponding user. 
@@ -52,6 +55,8 @@ def createpost():
     # TODO grab inputs from the form
     post_title = request.args.get('post_title')
 
+    # You can pass a default value of None so you don't have to use a try/except
+    # request.args.get('post_caption', None)
     try:
         post_caption = request.args.get('post_caption')
     except Exception:
