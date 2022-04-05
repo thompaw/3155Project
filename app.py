@@ -1,13 +1,15 @@
 from flask import Flask, redirect, render_template, request
-
+from models.models import db
 app = Flask(__name__) #static_url_path='/static' (??) (ignore)
 
+# database connection stuffs below
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost:3306/3155project'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db.init_app(app)
 # placeholder lists of dictionaries till sql implementation
 
 # each user has a 'name' and 'status'
-users = {'testuser': {'name':'brian', 'status':'in pain'}
-
-}
+users = {'testuser': {'name':'brian', 'status':'in pain'}}
 
 posts = {}  # posts have a 'title', 'caption' and 'song'
 
