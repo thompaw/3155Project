@@ -3,7 +3,7 @@ from models.models import db
 app = Flask(__name__) #static_url_path='/static' (??) (ignore)
 
 # database connection stuffs below
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost:3306/3155project'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost:3306/Project'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 # placeholder lists of dictionaries till sql implementation
