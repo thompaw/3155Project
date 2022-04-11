@@ -13,7 +13,7 @@ CREATE TABLE user_profile( /* Table for the user's profile, contains their id, n
 
 CREATE TABLE song( /* song table, holds the id as well as title and artist information. */
     song_id int NOT NULL AUTO_INCREMENT, 
-    artist varchar(255) NOT NULL,
+    artist varchar(30) NOT NULL,
     song_name varchar(40) NOT NULL,
     PRIMARY KEY (song_id)
 );
