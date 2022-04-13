@@ -6,7 +6,7 @@ db = SQLAlchemy()
 
 # Table for the user's profile, contains their id, name, password, and email.
 class User_Profile(db.Model):
-    user_id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(30), nullable=False)
     password = db.Column(db.String(30), nullable=False)
     email = db.Column(db.String(50), nullable=False)
@@ -18,7 +18,7 @@ class User_Profile(db.Model):
 
 # Song table, holds the id as well as title and artist information.
 class Song(db.Model):
-    song_id = db.Column(db.Integer, primary_key=True)
+    song_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     artist = db.Column(db.String(30), nullable=False)
     song_name = db.Column(db.String(40), nullable=False)
 
@@ -29,7 +29,7 @@ class Song(db.Model):
 
 # Post table, keeps the id, user id, caption, and song id.
 class Post(db.Model):
-    post_id = db.Column(db.Integer, primary_key=True)
+    post_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey(User_Profile.user_id), nullable=False)
     song_id = db.Column(db.Integer, db.ForeignKey(Song.song_id), nullable=False)
     caption = db.Column(db.String(255), nullable=False)
@@ -41,7 +41,7 @@ class Post(db.Model):
 
 # Comment table, keeps comment id, user id, post id, and the conent of the comment.
 class Comment(db.Model):
-    comment_id = db.Column(db.Integer, primary_key=True)
+    comment_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey(User_Profile.user_id), nullable=False)
     post_id = db.Column(db.Integer, db.ForeignKey(Post.post_id), nullable=False)
     content = db.Column(db.String(255), nullable=False)
