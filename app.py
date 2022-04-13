@@ -1,5 +1,5 @@
 from flask import Flask, redirect, render_template, request
-from models.models import db
+from models import db
 app = Flask(__name__) #static_url_path='/static' (??) (ignore)
 
 # database connection stuffs below
