@@ -1,14 +1,14 @@
 # Implement all CRUD elements
 # Reference this: https://github.com/jacobtie/itsc-3155-module-10-demo/blob/main/blueprints/book_blueprint.py
 from flask import Blueprint, abort, redirect, render_template, request
-from models import User_Profile, db
+from models import userprofile, db
 
 router = Blueprint('user_profile_router', __name__, url_prefix='/user_profile')
 
 # Hirdhay
 @router.get('')
 def get_all_user_profile():
-    all_users = User_Profile.query.all()
+    all_users = userprofile.query.all()
     return render_template('all_users.html', users = all_users)
 
 # Haley
