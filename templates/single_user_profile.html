@@ -1,0 +1,11 @@
+{% extends '_layout.html' %}
+
+{% block title %}{% endblock %}
+
+<h1 class="mb-3">{{ user_profile.name }}</h1>
+
+<p>User information:</p>
+<p> {{user_profile.email }}</p>
+<p> {{user_profile.password }}</p>
+
+{% block body %}{% endblock %}
