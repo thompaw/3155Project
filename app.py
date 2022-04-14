@@ -1,11 +1,25 @@
 from flask import Flask, redirect, render_template, request
 from models import db
+import os
 app = Flask(__name__) #static_url_path='/static' (??) (ignore)
 
 # database connection stuffs below
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost:3306/Project'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost:3306/Project'
+
+import sqlalchemy
+engine = sqlalchemy.engine.URL.create(   #This is just the URI but separated. It all combines into variable engine.
+    drivername="mysql",
+    username="root",
+    password=os.getenv('pass'),          #put your sql server password in the .env file
+    host="localhost",
+    port = "3306",
+    database="Project"
+)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = engine
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
+
 # placeholder lists of dictionaries till sql implementation
 
 # each user has a 'name' and 'status'
