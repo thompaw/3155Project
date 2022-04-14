@@ -44,7 +44,8 @@ def create_user_profile():
 # Hirdhay
 @router.get('/<user_id>/edit')
 def get_edit_user_profile_form(user_id):
-    pass
+    user_to_edit = Userprofile.query.get_or_404(user_id)
+    return render_template('editprofile.html', user = user_to_edit)
 
 # Hirdhay
 @router.post('/<user_id>')
@@ -54,4 +55,10 @@ def update_user_profile(user_id):
 # Hirdhay
 @router.post('/<user_id>/delete')
 def delete_user_profile(user_id):
-    pass
+    print("here" + user_id)
+    user_to_delete = Userprofile.query.get_or_404(user_id)
+    print(user_id)
+
+    db.session.delete(user_to_delete)
+    db.session.commit()
+    return redirect('/user_profile')
