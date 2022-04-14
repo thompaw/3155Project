@@ -14,17 +14,29 @@ def get_all_user_profile():
 # Haley
 @router.get('/<user_id>')
 def get_single_user_profile(user_id):
-    pass
+    single_user_profile = User_Profile.query.get_or_404(user_id)
+    return render_template('single_user_profile.html', user_profile = single_user_profile)
 
 # Haley
 @router.get('/new')
 def create_user_profile_form():
-    pass
+    return render_template('signup.html')
 
 # Haley
 @router.post('')
 def create_user_profile():
-    pass
+    name = request.form.get('first-name', '') + " " + request.form.get('last-name', '')
+    email = request.form.get('email', '')
+    password = request.form.get('password', '')
+
+    if name == '' or email == '' or password == '':
+        abort(400)
+
+    new_user_profile = User_Profile(name=name, email=email, password=password)
+    db.session.add()
+    db.session.commit()
+
+    return(f'/user_profile/{new_user_profile.user_id}')
 
 # Hirdhay
 @router.get('/<user_id>/edit')
