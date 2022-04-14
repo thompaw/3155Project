@@ -14,7 +14,7 @@ def get_all_user_profile():
 # Haley
 @router.get('/<user_id>')
 def get_single_user_profile(user_id):
-    single_user_profile = User_Profile.query.get_or_404(user_id)
+    single_user_profile = userprofile.query.get_or_404(user_id)
     return render_template('single_user_profile.html', user_profile = single_user_profile)
 
 # Haley
@@ -32,7 +32,7 @@ def create_user_profile():
     if name == '' or email == '' or password == '':
         abort(400)
 
-    new_user_profile = User_Profile(name=name, email=email, password=password)
+    new_user_profile = userprofile(name=name, email=email, password=password)
     db.session.add()
     db.session.commit()
 
