@@ -15,7 +15,10 @@ def get_all_user_profile():
 @router.get('/<user_id>')
 def get_single_user_profile(user_id):
     single_user_profile = Userprofile.query.get_or_404(user_id)
-    return render_template('single_user_profile.html', user_profile = single_user_profile)
+    print(user_id)
+    print(single_user_profile.user_name)
+    print(single_user_profile)
+    return render_template('single_user_profile.html', user = single_user_profile)
 
 # Haley
 @router.get('/new')
@@ -32,17 +35,16 @@ def create_user_profile():
     if name == '' or email == '' or password == '':
         abort(400)
 
-    new_user_profile = Userprofile(name=name, email=email, password=password)
-    db.session.add()
+    new_user_profile = Userprofile(user_name=name, email=email, user_pass=password)
+    db.session.add(new_user_profile)
     db.session.commit()
 
-    return(f'/user_profile/{new_user_profile.user_id}')
+    return redirect(f'/user_profile/{new_user_profile.user_id}')
 
 # Hirdhay
 @router.get('/<user_id>/edit')
 def get_edit_user_profile_form(user_id):
     pass
-    
 
 # Hirdhay
 @router.post('/<user_id>')
@@ -52,7 +54,4 @@ def update_user_profile(user_id):
 # Hirdhay
 @router.post('/<user_id>/delete')
 def delete_user_profile(user_id):
-    user_to_delete = Userprofile.query.get_or_404(user_id)
-    db.session.delete(user_to_delete)
-    db.session.commit()
-    return redirect('/books')
+    pass
