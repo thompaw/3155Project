@@ -11,7 +11,7 @@ import sqlalchemy
 engine = sqlalchemy.engine.URL.create(   #This is just the URI but separated. It all combines into variable engine.
     drivername="mysql",
     username="root",
-    password="JetFang@123",          #put your sql server password in the .env file
+    password="Haleyvay!23",          #put your sql server password in the .env file
     host="localhost",
     port = "3306",
     database="Project"

@@ -15,9 +15,6 @@ def get_all_user_profile():
 @router.get('/<user_id>')
 def get_single_user_profile(user_id):
     single_user_profile = Userprofile.query.get_or_404(user_id)
-    print(user_id)
-    print(single_user_profile.user_name)
-    print(single_user_profile)
     return render_template('single_user_profile.html', user = single_user_profile)
 
 # Haley
@@ -50,15 +47,27 @@ def get_edit_user_profile_form(user_id):
 # Hirdhay
 @router.post('/<user_id>')
 def update_user_profile(user_id):
-    pass
+    print(user_id)
+    user_to_update = Userprofile.query.get_or_404(user_id)
+    print(user_to_update)
+    name = request.form.get('name', '')
+
+    if name == '':
+        abort(400)
+
+    user_to_update.user_name = name
+
+    db.session.commit()
+
+    return redirect(f'/user_profile/{user_id}')
 
 # Hirdhay
 @router.post('/<user_id>/delete')
 def delete_user_profile(user_id):
     print("here" + user_id)
-    user_to_delete = Userprofile.query.get_or_404(user_id)
+    user_to_endit = Userprofile.query.get_or_404(user_id)
     print(user_id)
 
-    db.session.delete(user_to_delete)
+    db.session.delete(user_to_endit)
     db.session.commit()
     return redirect('/user_profile')
