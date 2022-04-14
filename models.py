@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 # Table for the user's profile, contains their id, name, password, and email.
-class userprofile(db.Model):
+class Userprofile(db.Model):
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_name = db.Column(db.String(30), nullable=False)
     user_pass = db.Column(db.String(30), nullable=False)
@@ -30,7 +30,7 @@ class Song(db.Model):
 # Post table, keeps the id, user id, caption, and song id.
 class Post(db.Model):
     post_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    user_id = db.Column(db.Integer, db.ForeignKey(userprofile.user_id), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(Userprofile.user_id), nullable=False)
     song_id = db.Column(db.Integer, db.ForeignKey(Song.song_id), nullable=False)
     caption = db.Column(db.String(255), nullable=False)
 
@@ -42,7 +42,7 @@ class Post(db.Model):
 # Comment table, keeps comment id, user id, post id, and the conent of the comment.
 class Comment(db.Model):
     comment_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    user_id = db.Column(db.Integer, db.ForeignKey(userprofile.user_id), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(Userprofile.user_id), nullable=False)
     post_id = db.Column(db.Integer, db.ForeignKey(Post.post_id), nullable=False)
     content = db.Column(db.String(255), nullable=False)
 
@@ -54,7 +54,7 @@ class Comment(db.Model):
 # JUNCTION TABLE
 # Table for the m to m relation that comes with user/post. keeps the user and post id.
 class Post_User(db.Model):
-    user_id = db.Column(db.Integer, db.ForeignKey(userprofile.user_id), primary_key=True, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(Userprofile.user_id), primary_key=True, nullable=False)
     post_id = db.Column(db.Integer, db.ForeignKey(Post.post_id), primary_key=True, nullable=False)
 
     # Print out string for Post_User information
@@ -65,8 +65,8 @@ class Post_User(db.Model):
 # JUNCTION TABLE
 # Table for determining followers, used to track who follows who.
 class Follower(db.Model):
-    follower_id = db.Column(db.Integer, db.ForeignKey(userprofile.user_id), primary_key=True, nullable=False)
-    following_id = db.Column(db.Integer, db.ForeignKey(userprofile.user_id), primary_key=True, nullable=False)
+    follower_id = db.Column(db.Integer, db.ForeignKey(Userprofile.user_id), primary_key=True, nullable=False)
+    following_id = db.Column(db.Integer, db.ForeignKey(Userprofile.user_id), primary_key=True, nullable=False)
     
     # Print out string for Follower-Following information
     def __repr__(self):
