@@ -8,7 +8,8 @@ router = Blueprint('user_profile_router', __name__, url_prefix='/user_profile')
 # Hirdhay
 @router.get('')
 def get_all_user_profile():
-    pass
+    all_users = User_Profile.query.all()
+    return render_template('all_users.html', users = all_users)
 
 # Haley
 @router.get('/<user_id>')

@@ -7,13 +7,13 @@ db = SQLAlchemy()
 # Table for the user's profile, contains their id, name, password, and email.
 class User_Profile(db.Model):
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(30), nullable=False)
-    password = db.Column(db.String(30), nullable=False)
+    user_name = db.Column(db.String(30), nullable=False)
+    user_pass = db.Column(db.String(30), nullable=False)
     email = db.Column(db.String(50), nullable=False)
 
     # Print out string for User information
     def __repr__(self):
-        return f'User_profile({self.user_id}, {self.name}, {self.password}, {self.email})'
+        return f'User_profile({self.user_id}, {self.user_name}, {self.user_pass}, {self.email})'
 
 
 # Song table, holds the id as well as title and artist information.

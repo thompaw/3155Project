@@ -5,8 +5,8 @@ USE Project;  /* This is our database name */
 
 CREATE TABLE user_profile( /* Table for the user's profile, contains their id, name, password, and email*/
     user_id int NOT NULL AUTO_INCREMENT, 
-    [name] varchar(30) NOT NULL, /* name and pass are blocked due to being sql keywords, they still work fine but need the brackets */
-    [password] varchar(30) NOT NULL, 
+    user_name varchar(30) NOT NULL, /* name and pass are blocked due to being sql keywords, they still work fine but need the brackets */
+    user_pass varchar(30) NOT NULL, 
     email varchar(50) NOT NULL, 
     PRIMARY KEY (user_id)
 );
@@ -34,7 +34,7 @@ CREATE TABLE comment( /* comment table, keeps comment id, user id, post id, and 
     post_id int NOT NULL, 
     content varchar(255) NOT NULL, 
     PRIMARY KEY (comment_id),
-    FOREIGN KEY (user_id) REFERENCES user_profile(user_id)
+    FOREIGN KEY (user_id) REFERENCES user_profile(user_id),
     FOREIGN KEY (post_id) REFERENCES post(post_id)
 );
 
