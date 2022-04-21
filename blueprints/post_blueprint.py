@@ -47,7 +47,7 @@ def update_post(post_id):
     create = request.form.get('Create', type=boolean)
     cancel = request.form.get('cancel', type=boolean)
 
-   if title == '' or song == '' or caption == '':
+    if title == '' or song == '' or caption == '':
         abort(400)
 
     post_to_update.title = title
