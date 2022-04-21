@@ -13,27 +13,27 @@
         <div class="col-md-auto">
             <h1>Ready to hear some cool vibes?</h1>
             <h2>Sign up for a free account</h2>
-            <form action = "/submitSignUp" method = "post" autocomplete="off">
+            <form action = "/user_profile" method = "post">
                 <!--First name and last name field-->
                 <div class="input-group mb-3">
-                    <input type="text" aria-label="First name" class="form-control" placeholder="First name" required>
-                    <input type="text" aria-label="Last name" class="form-control" placeholder="Last name" required>
+                    <input type="text" name="first-name" id="first-name" aria-label="First-name" class="form-control" placeholder="First name" required autocomplete="off">
+                    <input type="text" name="last-name" id="last-name" aria-label="Last-name" class="form-control" placeholder="Last name" required autocomplete="off">
                 </div>
 
                 <!--Email field-->
                 <div class="mb-3">
-                    <input type="email" class="form-control" id="signUpEmail" aria-describedby="emailHelp" placeholder="Email address" required>
+                    <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Email address" required autocomplete="off">
                 </div>
 
                 <!--Password field-->
                 <div class="mb-3">
-                    <input type="password" class="form-control" id="signUpPassword" aria-describedby="passwordHelpBlock" placeholder="Password" required>
+                    <input type="password" class="form-control" name="password" id="password" aria-describedby="passwordHelpBlock" placeholder="Password" required autocomplete="off">
                 </div>
 
                 <!--Password comfirmation field-->
-                <div class="mb-3">
-                    <input type="password" class="form-control" id="comfirmSignUpPassword" aria-describedby="passwordHelpBlock" placeholder="Comfirm password" required>
-                </div>
+                <!-- <div class="mb-3">
+                    <input type="password" class="form-control" name="comfirmPassword" id="comfirmPassword" aria-describedby="passwordHelpBlock" placeholder="Comfirm password" required>
+                </div> -->
 
                 <!--Sign up button-->
                 <button type="submit" class="btn btn-outline-primary">Sign up</button>

@@ -1,0 +1,87 @@
+{% extends '_layout.html' %}
+
+{% block title %}{{user.user_name}}'s Profile{% endblock %}
+
+
+{% block body %}
+
+<div class="container" style="background-color: rgba(218, 218, 218, 0.486);">
+    <!--Row contains basic user information (picture, name, followers, etc.)-->
+    <div class="row my-2">
+        <div class="col-md-4"></div>
+        <div class="col-md-4" style="background-color: rgb(167, 163, 163);">
+            <!--Insert the user profile picture *-->
+            <div class="text-center my-2">
+                <img src="/static/assets/default-profile-icon.jpg" class="rounded" alt="Default profile picture." style="width: 50%;">
+            </div>
+            <!--List basic information about user *-->
+            <h3 class="text-center">
+                {{ user.user_name }}
+            </h3>
+            <p class="text-center">
+                SAN FRANSISCO, CA
+            </p>
+            <!--List follower/following/song status *-->
+            <div class="row">
+                <div class="col-md-4">
+                    <h4 class="text-center">45</h4>
+                    <p class="text-center">Songs</p>
+                </div>
+                <div class="col-md-4">
+                    <h4 class="text-center">602</h4>
+                    <p class="text-center">Followers</p>
+                </div>
+                <div class="col-md-4">
+                    <h4 class="text-center">290</h4>
+                    <p class="text-center">Following</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+
+    <!--Row contains follow and message button-->
+    <div class="row my-2">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <div class="d-grid gap-2 d-md-block text-center">
+                <button class="btn btn-outline-primary" type="button" action="#">Follow</button>
+                <button class="btn btn-outline-primary" type="button" action="#">Message</button>
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+
+    <!--Row contains user statistics-->
+    <div class="row my-2">
+        <div class="col-md-4"></div>
+        <div class="col-md-4" style="background-color: rgb(167, 163, 163);">
+            <div class="row my-1">
+                <div class="col-md-3"></div>
+                <div class="col-md-9">
+                    <p>"All Time Favorite Song"</p>
+                </div>
+            </div>
+            <div class="row my-1">
+                <div class="col-md-3"></div>
+                <div class="col-md-9">
+                    <p>"Song on Repeat"</p>
+                </div>
+            </div>
+            <div class="row my-1">
+                <div class="col-md-3"></div>
+                <div class="col-md-9">
+                    <p>"Most Liked Song"</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+<form action="/user_profile/{{ user.user_id }}/delete" method = 'POST'>
+    <button type="submit" class="btn btn-danger">Delete</button>
+</form>
+<form action="/user_profile/{{ user.user_id }}/edit" method = 'GET'>
+    <button type="submit" class="btn btn-outline-primary">Edit</button>
+</form>
+{% endblock %}

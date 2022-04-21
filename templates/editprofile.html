@@ -1,0 +1,15 @@
+{% extends '_layout.html' %}
+
+{% block body %}
+
+<h1 class="mb-3">Edit {{ user.user_name }}</h1>
+<form action="/user_profile/{{ user.user_id }}" method="post">
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" name="name" id="name" class="form-control" autocomplete="off" required value="{{ user.user_name }}">
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{% endblock %}
