@@ -1,17 +1,17 @@
+from dotenv import load_dotenv
 from flask import Flask, redirect, render_template, request
 from models import db
 from blueprints.user_profile_blueprint import router as user_profile_router
 import os
-
 app = Flask(__name__) #static_url_path='/static' (??) (ignore)
 
 # database connection stuffs below
-
+load_dotenv()
 import sqlalchemy
 engine = sqlalchemy.engine.URL.create(   #This is just the URI but separated. It all combines into variable engine.
     drivername="mysql",
     username="root",
-    password="",          #put your sql server password in the .env file
+    password=os.getenv('PASS'),          #put your sql server password in the .env file
     host="localhost",
     port = "3306",
     database="Project"
@@ -19,6 +19,7 @@ engine = sqlalchemy.engine.URL.create(   #This is just the URI but separated. It
 app.config['SQLALCHEMY_DATABASE_URI'] = engine
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
+
 # placeholder lists of dictionaries till sql implementation
 
 # each user has a 'name' and 'status'
@@ -96,3 +97,4 @@ if __name__ == "__main__":
     app.run(debug=True)
 
 app.register_blueprint(user_profile_router)
+
