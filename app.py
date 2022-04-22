@@ -11,7 +11,7 @@ import sqlalchemy
 engine = sqlalchemy.engine.URL.create(   #This is just the URI but separated. It all combines into variable engine.
     drivername="mysql",
     username="root",
-    password="Haleyvay!23",          #put your sql server password in the .env file
+    password="",          #put your sql server password in the .env file
     host="localhost",
     port = "3306",
     database="Project"
@@ -53,7 +53,7 @@ def signup():
 
 @app.get('/profile')
 def profile():
-    return render_template('profile.html')
+    return render_template('single_user_profile.html')
 
 @app.get('/viewpost')
 def viewpost():
