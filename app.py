@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 from flask import Flask, redirect, render_template, request
 from models import db
 from blueprints.user_profile_blueprint import router as user_profile_router
+from blueprints.post_blueprint import router as post_router
 import os
 app = Flask(__name__) #static_url_path='/static' (??) (ignore)
 
@@ -97,4 +98,4 @@ if __name__ == "__main__":
     app.run(debug=True)
 
 app.register_blueprint(user_profile_router)
-
+app.register_blueprint(post_router)
