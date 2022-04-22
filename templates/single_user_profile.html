@@ -18,9 +18,13 @@
             <h3 class="text-center">
                 {{ user.user_name }}
             </h3>
-            <p class="text-center">
-                SAN FRANSISCO, CA
-            </p>
+
+                {%if user.user_location != '' %}
+                <p class="text-center">{{ user.user_location }}</p>
+                {% else %}
+                <p class="text-center">N/A</p>
+                {% endif %}
+
             <!--List follower/following/song status *-->
             <div class="row">
                 <div class="col-md-4">
