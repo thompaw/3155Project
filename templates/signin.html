@@ -9,13 +9,25 @@
         <div class="col" >
             <br><br><br><br><br><br><br><br><br><br>
             <h2>Sign in:</h2>
-            <form autocomplete="off">
+            <form action="/signin" method="post">
+                <!--Username field-->
                 <div class="mb-3" style = "width:80%">
-                    <input type="text" class="form-control" name="username" id="exampleFormControlInput1" placeholder="Username" style="border-color:Black">
+                    <input type="text" class="form-control" name="username" id="exampleFormControlInput1" placeholder="Username" autocomplete="off">
                 </div>
+
+                <!--Password field-->
                 <div class="mb-3" style = "width:80%">
-                    <input type="password" class="form-control" name="username" id="exampleFormControlInput1" placeholder="Password" style="border-color:Black">
+                    <input type="password" class="form-control" name="username" id="exampleFormControlInput1" placeholder="Password" autocomplete="off">
                 </div>
+
+                <!--login button-->
+                <button type="submit" class="btn btn-outline-primary">Sign in</button>
+
+                <br>
+                <!--Go to signup page-->
+                <a href="/signup" class="link-secondary">Don't have an account?</a>
+
+
             </form>
         </div>
         <div class="col">

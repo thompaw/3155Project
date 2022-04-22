@@ -1,9 +1,14 @@
+from genericpath import exists
 from dotenv import load_dotenv
-from flask import Flask, redirect, render_template, request
-from models import db
+from flask import Flask, redirect, render_template, request, abort
+from models import Userprofile, db
 from blueprints.user_profile_blueprint import router as user_profile_router
 import os
+from flask_bcrypt import Bcrypt
+
 app = Flask(__name__) #static_url_path='/static' (??) (ignore)
+bcrypt = Bcrypt()
+bcrypt.init_app(app)
 
 # database connection stuffs below
 load_dotenv()
@@ -18,6 +23,7 @@ engine = sqlalchemy.engine.URL.create(   #This is just the URI but separated. It
 )
 app.config['SQLALCHEMY_DATABASE_URI'] = engine
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 db.init_app(app)
 
 # placeholder lists of dictionaries till sql implementation
@@ -43,14 +49,6 @@ def index():
 def home():
     return redirect('/')
 
-
-@app.get('/signin')
-def signin():
-    return render_template('signin.html')
-
-@app.get('/signup')
-def signup():
-    return render_template('signup.html')
 
 @app.get('/profile')
 def profile():
@@ -88,10 +86,61 @@ def createpost_page():
     return render_template('createpost.html', selection=songdict)
 
 
-@app.post('/submitSignUp')
-def createUser():
-    return home()
+@app.get('/signup')
+def get_signup_page():
+    return render_template('signup.html')
 
+
+@app.post('/signup')
+def signup():
+    username = request.form.get('username', '')
+    email = request.form.get('email', '')
+    password = request.form.get('password', '')
+
+    if username == '' or email == '' or password == '':
+        abort(400)
+
+
+    hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+
+    new_user = Userprofile(user_name=username, user_email=email, user_password=hashed_password)
+
+    db.session.add(new_user)
+    db.session.commit()
+
+    return redirect('/')
+
+
+@app.get('/signin')
+def get_sigin_page():
+    return render_template('signin.html')
+
+@app.post('/signin')
+def signin():
+    username = request.form.get('username', '')
+    password = request.form.get('password', '')
+
+    print('pass 1')
+    
+    print('pass 2')
+    existing_user = Userprofile.query.filter_by(user_name=username).first()
+    print(existing_user)
+
+    if not existing_user or existing_user.user_id == 0:
+        print('failed 1')
+        return redirect('/fail')
+
+    if not bcrypt.check_password_hash(existing_user.user_password, password):
+        print('fail 2')
+        return redirect('/fail')
+    
+    
+        
+
+
+@app.get('/fail')
+def fail():
+    return render_template('fail.html')
 
 if __name__ == "__main__":
     app.run(debug=True)

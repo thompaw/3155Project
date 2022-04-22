@@ -5,9 +5,9 @@ USE Project;  /* This is our database name */
 
 CREATE TABLE userprofile( /* Table for the user's profile, contains their id, name, password, and email*/
     user_id int NOT NULL AUTO_INCREMENT, 
-    user_name varchar(30) NOT NULL, /* name and pass are blocked due to being sql keywords, they still work fine but need the brackets */
-    user_password varchar(30) NOT NULL, 
-    user_email varchar(50) NOT NULL, 
+    user_name varchar(255) NOT NULL UNIQUE, /* name and pass are blocked due to being sql keywords, they still work fine but need the brackets */
+    user_password varchar(255) NOT NULL, 
+    user_email varchar(255) NOT NULL UNIQUE, 
     user_biography varchar(255),
     user_location varchar(255),
     PRIMARY KEY (user_id)
@@ -15,8 +15,8 @@ CREATE TABLE userprofile( /* Table for the user's profile, contains their id, na
 
 CREATE TABLE song( /* song table, holds the id as well as title and artist information. */
     song_id int NOT NULL AUTO_INCREMENT, 
-    artist varchar(30) NOT NULL,
-    song_name varchar(40) NOT NULL,
+    artist varchar(255) NOT NULL,
+    song_name varchar(255) NOT NULL,
     PRIMARY KEY (song_id)
 );
 
