@@ -52,18 +52,6 @@ class Comment(db.Model):
     def __repr__(self):
         return f'comment({self.follower_id}, {self.following_id})'
 
-
-# JUNCTION TABLE
-# Table for the m to m relation that comes with user/post. keeps the user and post id.
-class Post_User(db.Model):
-    user_id = db.Column(db.Integer, db.ForeignKey(Userprofile.user_id), primary_key=True, nullable=False)
-    post_id = db.Column(db.Integer, db.ForeignKey(Post.post_id), primary_key=True, nullable=False)
-
-    # Print out string for Post_User information
-    def __repr__(self):
-        return f'follower-following({self.follower_id}, {self.following_id})'
-
-
 # JUNCTION TABLE
 # Table for determining followers, used to track who follows who.
 class Follower(db.Model):
