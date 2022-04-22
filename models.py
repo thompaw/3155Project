@@ -8,12 +8,14 @@ db = SQLAlchemy()
 class Userprofile(db.Model):
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_name = db.Column(db.String(30), nullable=False)
-    user_pass = db.Column(db.String(30), nullable=False)
-    email = db.Column(db.String(50), nullable=False)
+    user_password = db.Column(db.String(30), nullable=False)
+    user_biography = db.Column(db.String(255), nullable=True)
+    user_location = db.Column(db.String(255), nullable=True)
+    user_email = db.Column(db.String(50), nullable=False)
 
     # Print out string for User information
     def __repr__(self):
-        return f'userprofile({self.user_id}, {self.user_name}, {self.user_pass}, {self.email})'
+        return f'userprofile({self.user_id}, {self.user_name}, {self.user_password}, {self.user_email})'
 
 
 # Song table, holds the id as well as title and artist information.

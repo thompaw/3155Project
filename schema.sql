@@ -6,8 +6,10 @@ USE Project;  /* This is our database name */
 CREATE TABLE userprofile( /* Table for the user's profile, contains their id, name, password, and email*/
     user_id int NOT NULL AUTO_INCREMENT, 
     user_name varchar(30) NOT NULL, /* name and pass are blocked due to being sql keywords, they still work fine but need the brackets */
-    user_pass varchar(30) NOT NULL, 
-    email varchar(50) NOT NULL, 
+    user_password varchar(30) NOT NULL, 
+    user_email varchar(50) NOT NULL, 
+    user_biography varchar(255),
+    user_location varchar(255),
     PRIMARY KEY (user_id)
 );
 

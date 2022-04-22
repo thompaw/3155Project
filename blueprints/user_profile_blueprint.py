@@ -32,7 +32,7 @@ def create_user_profile():
     if name == '' or email == '' or password == '':
         abort(400)
 
-    new_user_profile = Userprofile(user_name=name, email=email, user_pass=password)
+    new_user_profile = Userprofile(user_name=name, user_email=email, user_password=password)
     db.session.add(new_user_profile)
     db.session.commit()
 
@@ -47,15 +47,17 @@ def get_edit_user_profile_form(user_id):
 # Hirdhay
 @router.post('/<user_id>')
 def update_user_profile(user_id):
-    print(user_id)
     user_to_update = Userprofile.query.get_or_404(user_id)
-    print(user_to_update)
     name = request.form.get('name', '')
+    location = request.form.get('location', '')
+    biography = request.form.get('biography', '')
 
-    if name == '':
+    if location == '' or biography == '':
         abort(400)
 
-    user_to_update.user_name = name
+
+    user_to_update.user_location = location
+    user_to_update.user_biography = biography
 
     db.session.commit()
 
