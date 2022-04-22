@@ -38,16 +38,6 @@ CREATE TABLE comment( /* comment table, keeps comment id, user id, post id, and 
     FOREIGN KEY (post_id) REFERENCES post(post_id)
 );
 
-
-/* JUNCTION TABLE */
-CREATE TABLE post_user( /* table for the m to m relation that comes with user/post. keeps the user and post id. */
-    user_id int NOT NULL, 
-    post_id int NOT NULL, 
-    PRIMARY KEY (user_id, post_id),
-    FOREIGN KEY (user_id) REFERENCES user_profile(user_id), 
-    FOREIGN KEY (post_id) REFERENCES post(post_id)
-);
-
 /* JUNCTION TABLE */
 CREATE TABLE follower ( /* Table for determining followers, used to track who follows who. */
     follower_id int NOT NULL, 
