@@ -39,6 +39,9 @@ songdict = {'song1': {'title':'song1', 'link':'https://www.youtube.com/watch?v=5
             'song2': {'title':'song2', 'link':'https://www.youtube.com/watch?v=5qap5aO4i9A', 'artist':'song2art'}, 
             'AAAAA': {'title':'SCALKS', 'link':'https://www.youtube.com/watch?v=lxoprelYHdo', 'artist':'formula1music'}}
 
+
+# NOT IN USER SESSION
+
 # no session home page
 @app.get('/')
 def get_index_page():
@@ -47,45 +50,6 @@ def get_index_page():
             return redirect('/home')
         
     return render_template('index.html')
-
-
-# user session home page feed
-@app.get('/home')
-def get_home_page():
-    # TODO pull recent posts to display on the front page
-    return render_template('home.html', user=users['testuser'], postlist=posts)
-
-@app.get('/viewpost')
-def viewpost():
-    # TODO figure out which post is being viewed, and find the corresponding user. 
-    # TODO then find the song being listed in the post
-    # TODO input these to the template
-    return render_template('viewpost.html', user=users['testuser'], post=posts['agony'], song=songdict['song1'])
-
-@app.post('/createpost')
-def createpost():
-    # TODO grab inputs from the form
-    post_title = request.args.get('post_title')
-
-    try:
-        post_caption = request.args.get('post_caption')
-    except Exception:
-        post_caption = None
-    
-    songid = request.args.get('song_select')
-
-    post = {'title':post_title, 'caption':post_caption, 'song':songid}
-
-    posts['agony'] = post
-    
-    # TODO change into values, add to database
-    return viewpost()
-
-
-@app.get('/createpost')
-def createpost_page():
-    return render_template('createpost.html', selection=songdict)
-
 
 # signup page
 @app.get('/signup')
@@ -164,9 +128,50 @@ def logout():
 # fail page when credentials don't work (both signin and signup)
 @app.get('/fail')
 def fail():
+    if 'user' in session:
+        return redirect('/home')
+
     return render_template('fail.html')
 
 
+# IN USER SESSION
+
+# user session home page feed
+@app.get('/home')
+def get_home_page():
+    # TODO pull recent posts to display on the front page
+    return render_template('home.html', user=users['testuser'], postlist=posts)
+
+@app.get('/viewpost')
+def viewpost():
+    # TODO figure out which post is being viewed, and find the corresponding user. 
+    # TODO then find the song being listed in the post
+    # TODO input these to the template
+    return render_template('viewpost.html', user=users['testuser'], post=posts['agony'], song=songdict['song1'])
+
+@app.post('/createpost')
+def createpost():
+    # TODO grab inputs from the form
+    post_title = request.args.get('post_title')
+
+    try:
+        post_caption = request.args.get('post_caption')
+    except Exception:
+        post_caption = None
+    
+    songid = request.args.get('song_select')
+
+    post = {'title':post_title, 'caption':post_caption, 'song':songid}
+
+    posts['agony'] = post
+    
+    # TODO change into values, add to database
+    return viewpost()
+
+
+@app.get('/createpost')
+def createpost_page():
+    return render_template('createpost.html', selection=songdict)
 
 if __name__ == "__main__":
     app.run(debug=True)
