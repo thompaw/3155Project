@@ -5,15 +5,20 @@
 {% block body %}
 
 <div class="container">
+    
     <div class="row align-items-start">
-        <div class="col">
+        <!--website image-->
+        <div class="col-md-auto">
             <img src="static/assets/icons.png" alt="Icon Image" style="width: 95%;">
         </div>
 
-        <div class="col-md-auto">
+        <!--signup form-->
+        <div class="col">
+            
             <h1>Ready to hear some cool vibes?</h1>
             <h2>Sign up for a free account</h2>
-            <form action = "/signup" method = "post">
+
+            <form action="/signup" method="POST">
                 <!--First name and last name field-->
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" name="username" id="username" placeholder="Username" required autocomplete="off">
@@ -29,11 +34,6 @@
                     <input type="password" class="form-control" name="password" id="password" aria-describedby="passwordHelpBlock" placeholder="Password" required autocomplete="off">
                 </div>
 
-                <!--Password comfirmation field-->
-                <!-- <div class="mb-3">
-                    <input type="password" class="form-control" name="comfirmPassword" id="comfirmPassword" aria-describedby="passwordHelpBlock" placeholder="Comfirm password" required>
-                </div> -->
-
                 <!--Sign up button-->
                 <button type="submit" class="btn btn-outline-primary">Sign up</button>
 
@@ -42,6 +42,9 @@
                 <a href="/signin" class="link-secondary">Already have an account?</a>
             </form>
         </div>
+
     </div>
+
 </div>
+
 {% endblock %}

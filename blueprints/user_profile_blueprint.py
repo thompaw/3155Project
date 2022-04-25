@@ -1,6 +1,6 @@
 # Implement all CRUD elements
 # Reference this: https://github.com/jacobtie/itsc-3155-module-10-demo/blob/main/blueprints/book_blueprint.py
-from flask import Blueprint, abort, redirect, render_template, request
+from flask import Blueprint, abort, redirect, render_template, request, session
 from models import Userprofile, db
 
 router = Blueprint('user_profile_router', __name__, url_prefix='/user_profile')
@@ -14,7 +14,13 @@ def get_all_user_profile():
 # Haley
 @router.get('/<user_id>')
 def get_single_user_profile(user_id):
+
+    # if the user is not logged in it aborts to 401
+    if not 'user' in session:
+        abort(401)
+
     single_user_profile = Userprofile.query.get_or_404(user_id)
+    
     return render_template('single_user_profile.html', user = single_user_profile)
 
 # Haley

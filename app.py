@@ -1,14 +1,13 @@
 from genericpath import exists
 from dotenv import load_dotenv
-from flask import Flask, redirect, render_template, request, abort
+from flask import Flask, redirect, render_template, request, abort, session
 from models import Userprofile, db
 from blueprints.user_profile_blueprint import router as user_profile_router
 import os
 from flask_bcrypt import Bcrypt
 
 app = Flask(__name__) #static_url_path='/static' (??) (ignore)
-bcrypt = Bcrypt()
-bcrypt.init_app(app)
+bcrypt = Bcrypt(app)
 
 # database connection stuffs below
 load_dotenv()
@@ -22,7 +21,9 @@ engine = sqlalchemy.engine.URL.create(   #This is just the URI but separated. It
     database="Project"
 )
 app.config['SQLALCHEMY_DATABASE_URI'] = engine
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_TRACK_MODRIFICATIONS'] = False
+app.secret_key = os.getenv('SECRET_KEY')
+
 
 db.init_app(app)
 
@@ -38,21 +39,21 @@ songdict = {'song1': {'title':'song1', 'link':'https://www.youtube.com/watch?v=5
             'song2': {'title':'song2', 'link':'https://www.youtube.com/watch?v=5qap5aO4i9A', 'artist':'song2art'}, 
             'AAAAA': {'title':'SCALKS', 'link':'https://www.youtube.com/watch?v=lxoprelYHdo', 'artist':'formula1music'}}
 
-
+# no session home page
 @app.get('/')
-def index():
-    # TODO pull recent posts to display on the front page
-    return render_template('index.html', user=users['testuser'], postlist=posts)
+def get_index_page():
+    # if user is in session then redirect to home feed
+    if 'user' in session:
+            return redirect('/home')
+        
+    return render_template('index.html')
 
 
+# user session home page feed
 @app.get('/home')
-def home():
-    return redirect('/')
-
-
-@app.get('/profile')
-def profile():
-    return render_template('single_user_profile.html')
+def get_home_page():
+    # TODO pull recent posts to display on the front page
+    return render_template('home.html', user=users['testuser'], postlist=posts)
 
 @app.get('/viewpost')
 def viewpost():
@@ -86,11 +87,16 @@ def createpost_page():
     return render_template('createpost.html', selection=songdict)
 
 
+# signup page
 @app.get('/signup')
 def get_signup_page():
+    # if user is in session then redirect to home feed
+    if 'user' in session:
+        return redirect('/home')
+
     return render_template('signup.html')
 
-
+# signup page (add new user to database)
 @app.post('/signup')
 def signup():
     username = request.form.get('username', '')
@@ -108,39 +114,59 @@ def signup():
     db.session.add(new_user)
     db.session.commit()
 
-    return redirect('/')
+    return redirect('/signin')
 
-
+# signin page
 @app.get('/signin')
 def get_sigin_page():
+    # if user is in session then redirect to home feed
+    if 'user' in session:
+        return redirect('/home')
+    
     return render_template('signin.html')
 
+# signin page (start session)
 @app.post('/signin')
 def signin():
     username = request.form.get('username', '')
     password = request.form.get('password', '')
 
-    print('pass 1')
-    
-    print('pass 2')
     existing_user = Userprofile.query.filter_by(user_name=username).first()
     print(existing_user)
 
     if not existing_user or existing_user.user_id == 0:
-        print('failed 1')
         return redirect('/fail')
 
     if not bcrypt.check_password_hash(existing_user.user_password, password):
-        print('fail 2')
         return redirect('/fail')
-    
-    
-        
+
+    session['user'] = {
+        'username': username,
+        'user_id': existing_user.user_id
+    }
 
 
+    return redirect('/home')
+
+# log out (end session)   
+@app.post('/logout')
+def logout():
+    # if user is not logged in then abort
+    if 'user' not in session:
+        abort(401)
+
+    # delete the user session
+    del session['user']
+
+    # redirect to landing page
+    return redirect('/')
+
+# fail page when credentials don't work (both signin and signup)
 @app.get('/fail')
 def fail():
     return render_template('fail.html')
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)

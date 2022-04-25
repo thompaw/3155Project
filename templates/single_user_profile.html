@@ -14,22 +14,28 @@
             <div class="text-center my-2">
                 <img src="/static/assets/default-profile-icon.jpg" class="rounded" alt="Default profile picture." style="width: 50%;">
             </div>
-            <!--List basic information about user *-->
+
+
+            <!--username-->
             <h3 class="text-center">
                 {{ user.user_name }}
             </h3>
 
-                {%if user.user_location != '' %}
-                <p class="text-center">{{ user.user_location }}</p>
-                {% else %}
-                <p class="text-center">N/A</p>
-                {% endif %}
+            {%if user.user_location == 'None' %}
+                <p class="text-center">
+                    Resident of the World
+                </p>
+            {% else %}
+                <p class="text-center">
+                    {{ user.user_location }}
+                </p>
+            {% endif %}
 
-            <!--List follower/following/song status *-->
+            <!--list posts, followers, and following-->
             <div class="row">
                 <div class="col-md-4">
                     <h4 class="text-center">45</h4>
-                    <p class="text-center">Songs</p>
+                    <p class="text-center">Posts</p>
                 </div>
                 <div class="col-md-4">
                     <h4 class="text-center">602</h4>
@@ -44,7 +50,7 @@
         <div class="col-md-4"></div>
     </div>
 
-    <!--Row contains follow and message button-->
+    <!--follow and message buttons-->
     <div class="row my-2">
         <div class="col-md-4"></div>
         <div class="col-md-4">
@@ -56,14 +62,24 @@
         <div class="col-md-4"></div>
     </div>
 
-    <!--Row contains user statistics-->
+    <!--user biography-->
     <div class="row my-2">
         <div class="col-md-4"></div>
         <div class="col-md-4" style="background-color: rgb(167, 163, 163);">
             <div class="row my-1">
             </div>
             <div class="row my-1">
-                <p class="text-center">{{ user.user_biography }}</p>
+
+                {% if user.user_biography == 'None' %}
+                    <p class="text-center">
+                        No bio yet. Add one!
+                    </p>
+                {% else %}
+                    <p class="text-center">
+                        {{ user.user_biography }}
+                    </p>
+                {% endif %}
+
             </div>
             <div class="row my-1">
             </div>
@@ -71,9 +87,19 @@
         <div class="col-md-4"></div>
     </div>
 </div>
+
+
+<!--logout button-->
+<form action="/logout" method = 'POST'>
+    <button type="submit" class="btn btn-danger">Logout</button>
+</form>
+
+<!--delete profile button-->
 <form action="/user_profile/{{ user.user_id }}/delete" method = 'POST'>
     <button type="submit" class="btn btn-danger">Delete</button>
 </form>
+
+<!--edit profile button-->
 <form action="/user_profile/{{ user.user_id }}/edit" method = 'GET'>
     <button type="submit" class="btn btn-outline-primary">Edit</button>
 </form>
