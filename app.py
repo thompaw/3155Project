@@ -144,7 +144,7 @@ def get_home_page():
         abort(401)
     
     # TODO pull recent posts to display on the front page
-    return render_template('home.html', user=users['testuser'], postlist=posts, user_in_session = session['user']['user_id'])
+    return render_template('home.html', user=users['testuser'], postlist=posts, user_in_session = session['user']['user_id'], user_in_session_name = session['user']['username'])
 
 @app.get('/viewpost')
 def viewpost():
