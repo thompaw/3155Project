@@ -46,21 +46,24 @@
                     <p class="text-center">Following</p>
                 </div>
             </div>
+
         </div>
         <div class="col-md-4"></div>
     </div>
 
+    {% if user.user_id != user_in_session %}
     <!--follow and message buttons-->
-    <div class="row my-2">
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
-            <div class="d-grid gap-2 d-md-block text-center">
-                <button class="btn btn-outline-primary" type="button" action="#">Follow</button>
-                <button class="btn btn-outline-primary" type="button" action="#">Message</button>
+        <div class="row my-2">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <div class="d-grid gap-2 d-md-block text-center">
+                    <button class="btn btn-outline-primary" type="button" action="#">Follow</button>
+                    <button class="btn btn-outline-primary" type="button" action="#">Message</button>
+                </div>
             </div>
+            <div class="col-md-4"></div>
         </div>
-        <div class="col-md-4"></div>
-    </div>
+    {% endif %}
 
     <!--user biography-->
     <div class="row my-2">
@@ -88,19 +91,38 @@
     </div>
 </div>
 
+{% if user.user_id == user_in_session %}
+    <div class="row my-2">
 
-<!--logout button-->
-<form action="/logout" method = 'POST'>
-    <button type="submit" class="btn btn-danger">Logout</button>
-</form>
+        <div class="col-md-4">
+        </div>
 
-<!--delete profile button-->
-<form action="/user_profile/{{ user.user_id }}/delete" method = 'POST'>
-    <button type="submit" class="btn btn-danger">Delete</button>
-</form>
+        <div class="col-md-4">
+            <div class="d-grid gap-2 d-md-block text-center">
 
-<!--edit profile button-->
-<form action="/user_profile/{{ user.user_id }}/edit" method = 'GET'>
-    <button type="submit" class="btn btn-outline-primary">Edit</button>
-</form>
+                <!--logout button-->
+                <form action="/logout" method = 'POST'>
+                    <button type="submit" class="btn btn-danger">Logout</button>
+                </form>
+
+                <!--delete profile button-->
+                <form action="/user_profile/{{ user.user_id }}/delete" method = 'POST'>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+
+                <!--edit profile button-->
+                <form action="/user_profile/{{ user.user_id }}/edit" method = 'GET'>
+                    <button type="submit" class="btn btn-outline-primary">Edit</button>
+                </form>
+
+            </div>
+        </div>
+
+        <div class="col-md-4">
+        </div>
+    </div>
+
+{% endif %}
+
+
 {% endblock %}

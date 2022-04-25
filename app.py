@@ -139,8 +139,12 @@ def fail():
 # user session home page feed
 @app.get('/home')
 def get_home_page():
+    # if user is not logged in then abort
+    if 'user' not in session:
+        abort(401)
+    
     # TODO pull recent posts to display on the front page
-    return render_template('home.html', user=users['testuser'], postlist=posts)
+    return render_template('home.html', user=users['testuser'], postlist=posts, user_in_session = session['user']['user_id'])
 
 @app.get('/viewpost')
 def viewpost():
