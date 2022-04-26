@@ -4,7 +4,9 @@
 
 
 <h1 class="mb-3">All Posts</h1>
-
+<form action = '/post/songsearch' method='GET'>
+    <button type="submit" class="btn btn-outline-primary">Make a post</button>
+</form>
 {% for post in posts %}
     <div>
         <a href="/post/{{ post.post_id }}">{{ post.title }}</a>

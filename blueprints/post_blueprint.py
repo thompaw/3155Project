@@ -32,7 +32,7 @@ def create_post():
     for artist in artists:
         artiststring = artiststring + artist['name'] + ', '
     song_link = song['preview_url']
-    print(title + song_name + artiststring + caption + song_link)   
+    #print(title + song_name + artiststring + caption + song_link)   
     create = request.form.get('create', '') #???
     cancel = request.form.get('cancel', '') #???
 
@@ -55,22 +55,18 @@ def get_edit_Post_form(post_id):
 @router.post('/<post_id>') #TODO: do the updating for the post
 def update_post(post_id):
     post_to_update = Post.query.get_or_404(post_id)
-    user_id = Post.query.get_or_404(user_id)
-    title = request.form.get('Title', '')
-    caption = request.form.get('Caption', '')
-    song = request.form.get('song_select',  '')
+    title = request.form.get('title', '')
+    caption = request.form.get('caption', '')
     create = request.form.get('create', '') #???
     cancel = request.form.get('cancel', '') #???
 
-    if title == '' or song == '' or caption == '':
+    if title == '' or caption == '':
         abort(400)
 
     post_to_update.title = title
     post_to_update.caption = caption
-    post_to_update.song = song
 
     db.session.commit()
-
     return redirect(f'/post/{post_id}')
 
 @router.post('/<post_id>/delete') #TODO: delete a post

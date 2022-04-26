@@ -84,11 +84,11 @@ def createpost():
     # TODO change into values, add to database
     return viewpost()
 
-@app.get('/songsearch')
+@app.get('/post/songsearch')
 def songsearch():
     return render_template('songsearch.html')
 
-@app.get('/createpost') #mightbe useless now
+@app.get('/post/createpost') 
 def createpost_page():
     query = request.args.get('songname')
     

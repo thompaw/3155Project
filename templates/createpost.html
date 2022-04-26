@@ -12,11 +12,13 @@
 
         <select name = "song_select" id="song_select" required>  
             {% for tracks in selection %} 
-                <option name = "song_name" id="song_name" value='{{ tracks.id }}'>{{ tracks.name }} by
-                    {% for artist in tracks.artists %}
-                        , {{ artist.name }}
-                    {% endfor %}
-                </option>
+                {% if tracks.preview_url is not none %}
+                    <option name = "song_name" id="song_name" value='{{ tracks.id }}'>{{ tracks.name }} by
+                        {% for artist in tracks.artists %}
+                            , {{ artist.name }}
+                        {% endfor %}
+                    </option>
+                {% endif %}
             {% endfor %}
         </select><br>
         <input type="submit" value="Create!">
