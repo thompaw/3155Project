@@ -26,13 +26,13 @@ def create_comment():  # taking data from the form
 # READ
 @router.get('/<post_id>')  # per post
 def get_comments_per_post(post_id):  # grab all comments associated to a single post
-    comment_list = Comment.query.get(post_id=post_id)
+    comment_list = Comment.query.filter_by(post_id=post_id).all()
     return render_template('viewpost.html', post=post_id, comments=comment_list)  # needs work
 
 
 @router.get('/<comment_id>')  # single comment
 def get_single_comment(comment_id):  # grab a single comment by it's id
-    single_comment = Comment.query.get_or_404(comment_id)
+    single_comment = Comment.query.get_or_404(comment_id).first()
     return render_template('Comments/<comment_id>', comment=single_comment)
 
 # UPDATE

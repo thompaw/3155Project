@@ -48,11 +48,8 @@ def signup():
 def profile():
     return render_template('profile.html')
 
-@app.get('/viewpost')
+@app.get('/viewpost')  #TODO change the route, add comments
 def viewpost():
-    # TODO figure out which post is being viewed, and find the corresponding user. 
-    # TODO then find the song being listed in the post
-    # TODO input these to the template
     return render_template('viewpost.html', user=users['testuser'], post=posts['agony'], song=songdict['song1'])
 
 @app.post('/createpost')
@@ -78,6 +75,9 @@ def createpost():
 @app.get('/createpost')
 def createpost_page():
     return render_template('createpost.html', selection=songdict)
+
+
+# TODO routes for viewing a single comment
 
 
 @app.post('/submitSignUp')
