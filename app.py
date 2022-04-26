@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 from flask import Flask, redirect, render_template, request
 from models import db
 from blueprints.user_profile_blueprint import router as user_profile_router
+from blueprints.comment_blueprint import router as comment_router
 import os
 app = Flask(__name__) #static_url_path='/static' (??) (ignore)
 
@@ -16,6 +17,7 @@ engine = sqlalchemy.engine.URL.create(   #This is just the URI but separated. It
     port = "3306",
     database="Project"
 )
+
 app.config['SQLALCHEMY_DATABASE_URI'] = engine
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
