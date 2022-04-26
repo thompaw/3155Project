@@ -5,6 +5,8 @@ from blueprints.user_profile_blueprint import router as user_profile_router
 from blueprints.comment_blueprint import router as comment_router
 import os
 import sqlalchemy
+
+
 app = Flask(__name__) #static_url_path='/static' (??) (ignore)
 
 # database connection stuffs below
