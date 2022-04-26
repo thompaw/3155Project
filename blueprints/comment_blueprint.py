@@ -13,8 +13,8 @@ def create_user_profile_form():
 
 @router.post('')
 def create_comment():  # taking data from the form
-    postnum = None
-    usernum = None  # should auto grab these based on where the form is located
+    postnum = 1
+    usernum = 1  # should auto grab these based on where the form is located
     goop = request.form.get('content', '')
 
     new_comment = Comment(user_id=usernum, post_id=postnum, content=goop)  # create a new comment object using the data from the form
