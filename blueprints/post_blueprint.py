@@ -33,8 +33,6 @@ def create_post():
         artiststring = artiststring + artist['name'] + ', '
     song_link = song['preview_url']
     #print(title + song_name + artiststring + caption + song_link)   
-    create = request.form.get('create', '') #???
-    cancel = request.form.get('cancel', '') #???
 
     if title == '' or song_name == '' or caption == '' or song_link == '' or artiststring== '':
         abort(400)
@@ -57,8 +55,6 @@ def update_post(post_id):
     post_to_update = Post.query.get_or_404(post_id)
     title = request.form.get('title', '')
     caption = request.form.get('caption', '')
-    create = request.form.get('create', '') #???
-    cancel = request.form.get('cancel', '') #???
 
     if title == '' or caption == '':
         abort(400)
