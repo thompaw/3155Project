@@ -40,17 +40,18 @@ songdict = {'song1': {'title':'song1', 'link':'https://www.youtube.com/watch?v=5
             'AAAAA': {'title':'SCALKS', 'link':'https://www.youtube.com/watch?v=lxoprelYHdo', 'artist':'formula1music'}}
 
 
+# Index and Home Page
 @app.get('/')
 def index():
     # TODO pull recent posts to display on the front page
     return render_template('index.html', user=users['testuser'], postlist=posts)
-
 
 @app.get('/home')
 def home():
     return redirect('/')
 
 
+# Sign in & Sign up
 @app.get('/signin')
 def signin():
     return render_template('signin.html')
@@ -59,15 +60,20 @@ def signin():
 def signup():
     return render_template('signup.html')
 
+@app.post('/submitSignUp')
+def createUser():
+    return home()
+
+
+# Profile
 @app.get('/profile')
 def profile():
     return render_template('single_user_profile.html')
 
+
+# Posts
 @app.get('/viewpost')
 def viewpost():
-    # TODO figure out which post is being viewed, and find the corresponding user. 
-    # TODO then find the song being listed in the post
-    # TODO input these to the template
     return render_template('viewpost.html', user=users['testuser'], post=posts['agony'], song=songdict['song1'])
 
 @app.post('/createpost')
@@ -96,20 +102,17 @@ def songsearch():
 @app.get('/post/createpost') 
 def createpost_page():
     query = request.args.get('songname')
-    
     results = spot.output(query)
-    #print(results)
     return render_template('createpost.html', selection=results['tracks']['items'])
 
 
-@app.post('/submitSignUp')
-def createUser():
-    return home()
 
-
+# App run code
 if __name__ == "__main__":
     app.run(debug=True)
 
+
+# Flask blueprint registration
 app.register_blueprint(user_profile_router)
 app.register_blueprint(post_router)
 app.register_blueprint(comment_router)
