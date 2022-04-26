@@ -49,8 +49,9 @@ def update_user_profile(user_id):
 
     db.session.commit()
 
-    return redirect(f'/user_profile/{user_id}', user_in_session = session['user']['user_id'])
-
+    #return redirect(f'/user_profile/{user_id}', user_in_session = session['user']['user_id'])
+    return redirect(f'/user_profile/{user_id}')
+    
 # Hirdhay
 @router.post('/<user_id>/delete')
 def delete_user_profile(user_id):
