@@ -1,0 +1,19 @@
+{% extends '_layout.html' %}
+
+{% block title %}Create Post{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <h1>Pick a song:</h1>
+    <form action="/post/createpost" method="GET" id="songform" name="songform">
+        <input type="text" placeholder="Enter song name" id="songname"  name = "songname" required>
+        <input type="submit" value = "Next">
+    </form>
+
+    <form action="/" method="GET" id="cancel" name="cancel">
+        <input type="submit" value = "Cancel">
+    </form>
+</div> 
+
+{% endblock %}

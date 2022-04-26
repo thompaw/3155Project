@@ -23,11 +23,13 @@ CREATE TABLE song( /* song table, holds the id as well as title and artist infor
 CREATE TABLE post( /* post table, keeps the id, user id, caption, and song id*/
     post_id int NOT NULL AUTO_INCREMENT, 
     user_id int NOT NULL, 
+    title varchar(255) NOT NULL,
     caption varchar(255) NOT NULL,
-    song_id int NOT NULL,
+    song_name varchar(255) NOT NULL,
+    song_artists varchar(255) NOT NULL,
+    song_link varchar(255) NOT NULL,
     PRIMARY KEY(post_id),
-    FOREIGN KEY (user_id) REFERENCES userprofile(user_id),
-    FOREIGN KEY (song_id) REFERENCES song(song_id)
+    FOREIGN KEY (user_id) REFERENCES userprofile(user_id)
 );
 
 CREATE TABLE comment( /* comment table, keeps comment id, user id, post id, and the conent of the comment */

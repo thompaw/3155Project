@@ -33,12 +33,14 @@ class Song(db.Model):
 class Post(db.Model):
     post_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey(Userprofile.user_id), nullable=False)
-    song_id = db.Column(db.Integer, db.ForeignKey(Song.song_id), nullable=False)
+    title = db.Column(db.String(255), nullable=False)
     caption = db.Column(db.String(255), nullable=False)
-
+    song_name = db.Column(db.String(255), nullable=False)
+    song_artists = db.Column(db.String(255), nullable=False)
+    song_link = db.Column(db.String(255), nullable=False)
     # Print out string for Post information
     def __repr__(self):
-        return f'post({self.post_id}, {self.user_id}, {self.song_id}, {self.caption})'    
+        return f'post({self.post_id}, {self.user_id},{self.title}, {self.caption}, {self.song_name}, {self.song_artists}, {self.song_link})'    
 
 
 # Comment table, keeps comment id, user id, post id, and the conent of the comment.
