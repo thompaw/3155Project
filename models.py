@@ -1,5 +1,3 @@
-import email
-from logging import NullHandler
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
