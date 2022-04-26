@@ -1,41 +1,30 @@
-{% extends '_layout.html' %}
+{% extends '_layout2.html' %}
 
-{% block title %}WIPM{% endblock %}
+{% block title %}W.I.P.M{% endblock %}
 
 {% block body %}
-<div class="container">
-    <div id="usrinfo">
-        <!-- greeting for user-->
-        <h1> Hey, {{ user['name'] }} !</h1>
-        <p><em>Where music meets your soul...</em></p> <!-- idk website tagline -->
-    </div>
-    <div class="container" id="postfeed">
-        <h3>Check out what you've been missing:</h3>
-        <!-- pull posts from database and put them on the user's homepage-->
-        {% for post in postlist%}
-            <div class="container" id="post">
-                <!-- post information -->
-                <!-- User details for the post-->
-                <h3> {{ user['name'] }}</h3>
-                <p> {{ user['status'] }}</p>
 
-                <div class="container">
-                    <!-- post details-->
-                    <h3> {{ post['title'] }}</h3>
-                    <br>
-                    <p> {{ post['caption'] }}</p>
-
-                    <div class="container">
-                        <!-- area for the song-->
-                        <h1> {{ song['title'] }}</h1>
-                        <h4> {{ song['artist'] }}</h4>
-                        <!-- placeholder for music details-->
-                        <a href="{{ song['link'] }}">Link to the song</a>
-                    </div>
-
-                </div>
+    <!--prompt user to login-->
+    <h1 class="mb-3">Welcome to W.M.I.P</h1>
+    <p>Please log in or sign up to talk about all the good tunes out today</p>
+        
+    <!--signin and signup buttons-->
+    <div class="container">
+        <div class="row">
+            <!--signup button-->
+            <div class="col">
+               <form action="/signup" method="GET">
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                </form>
             </div>
-        {% endfor %}
-    </div>
-</div>
+            
+            <!--signin button-->
+            <div class="col">
+                <form action="/signin" method="GET"> 
+                    <button type="submit" class="btn btn-primary">Sign In</button>
+                </form>
+            </div>
+        </div>
+     </div>
+
 {% endblock %}

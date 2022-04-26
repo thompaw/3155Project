@@ -18,21 +18,31 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+          <!--go to sesson user profile-->
           <li class="nav-item">
-            <a class="nav-link{% if list_movies_active %} active{% endif %}" href="/profile">Profile</a>
+            <a class="nav-link{% if list_movies_active %} active{% endif %}" href="/user_profile/{{ user_in_session }}">Profile</a>
           </li>
+
+          <!--search for users-->
           <li class="nav-item">
-            <a class="nav-link{% if create_rating_active %} active{% endif %}" href="/signup">Sign Up</a>
+            <a class="nav-link{% if search_active %} active{% endif %}" href="/user_profile">Search</a>
           </li>
+
+          <!--go to following feed-->
           <li class="nav-item">
-            <a class="nav-link{% if search_active %} active{% endif %}" href="/signin">Sign In</a>
+            <a class="nav-link{% if search_active %} active{% endif %}" href="/home">Feed</a>
           </li>
+          
+          <!--create post link-->
           <li class="nav-item">
-            <a class="nav-link{% if search_active %} active{% endif %}" href="/user_profile">Users</a>
+            <a class="nav-link{% if search_active %} active{% endif %}" href="#">Post</a>
           </li>
+          
           <li class="nav-item">
             <a class="nav-link{% if search_active %} active{% endif %}" href="/post">All Posts</a>
           </li>
+
         </ul>
       </div>
     </div>
