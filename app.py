@@ -3,9 +3,11 @@ from dotenv import load_dotenv
 from flask import Flask, redirect, render_template, request, abort, session
 from models import Userprofile, db
 from blueprints.user_profile_blueprint import router as user_profile_router
+from blueprints.post_blueprint import router as post_router
 import os
-from flask_bcrypt import Bcrypt
 
+from flask_bcrypt import Bcrypt
+import spot
 app = Flask(__name__) #static_url_path='/static' (??) (ignore)
 bcrypt = Bcrypt(app)
 
@@ -172,13 +174,20 @@ def createpost():
     # TODO change into values, add to database
     return viewpost()
 
+@app.get('/post/songsearch')
+def songsearch():
+    return render_template('songsearch.html')
 
-@app.get('/createpost')
+@app.get('/post/createpost') 
 def createpost_page():
-    return render_template('createpost.html', selection=songdict)
+    query = request.args.get('songname')
+    
+    results = spot.output(query)
+    #print(results)
+    return render_template('createpost.html', selection=results['tracks']['items'])
 
 if __name__ == "__main__":
     app.run(debug=True)
 
 app.register_blueprint(user_profile_router)
-
+app.register_blueprint(post_router)

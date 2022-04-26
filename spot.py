@@ -17,7 +17,6 @@ def output(songname):
         for artist in track['artists']:                       #each song has several artists, so u gotta cycle thru for every song
             print(artist['name'])                             #this prints the artists one at a time
         print(idx, track['name'], track['preview_url'])       #this prints the name of the song and it's preview_url (30 second song preview)
-        
     return results #this simply returns that original JSON file.
 
 
@@ -36,3 +35,5 @@ def output(songname):
     #     <audio controls src="{{ tracks.preview_url }}">Your browser does not support the<code>audio</code> element.</audio>
     # {% endfor %}
 
+def single(songid):
+    return sp.track(track_id=songid)
