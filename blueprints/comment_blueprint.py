@@ -13,29 +13,40 @@ def create_user_profile_form():
 
 @router.post('')
 def create_comment():
-    pass
+    postnum = None
+    usernum = None
+    goop = request.form.get('content', '')
+
+    new_comment = Comment(user_id=usernum, post_id=postnum, content=goop)
+    db.session.add(new_comment)
+    db.session.commit()
+
+    return redirect(f'Comment/<comment_id>')
 
 # READ
 @router.get('')  # per post
+def get_all_comments(post_id):
+    pass
 
-@router.get('')  # single comment
+@router.get('/<comment_id>')  # single comment
+def get_single_comment(comment_id):
+    pass
 
 # UPDATE
 @router.post('/<comment_id>')
 def update_comment(comment_id):
-    book_to_update = Book.query.get_or_404(book_id)
-    author = request.form.get('author', '')
-    rating = request.form.get('rating', 0, type=int)
+    updating_comment = Comment.query.get_or_404(comment_id)
 
-    if author == '' or rating < 1 or rating > 5:
+    goop = request.form.get('content', '')
+
+    if len(goop) < 1:
         abort(400)
 
-    book_to_update.author = author
-    book_to_update.rating = rating
+    updating_comment.content = goop
 
     db.session.commit()
 
-    return redirect(f'/books/{book_id}')
+    return redirect(f'Comment/<comment_id>')
 
 # DELETE
 @router.post('/<comment_id>/delete')
