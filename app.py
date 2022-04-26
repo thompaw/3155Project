@@ -4,11 +4,12 @@ from models import db
 from blueprints.user_profile_blueprint import router as user_profile_router
 from blueprints.comment_blueprint import router as comment_router
 import os
+import sqlalchemy
 app = Flask(__name__) #static_url_path='/static' (??) (ignore)
 
 # database connection stuffs below
 load_dotenv()
-import sqlalchemy
+
 engine = sqlalchemy.engine.URL.create(   #This is just the URI but separated. It all combines into variable engine.
     drivername="mysql",
     username="root",
@@ -21,19 +22,6 @@ engine = sqlalchemy.engine.URL.create(   #This is just the URI but separated. It
 app.config['SQLALCHEMY_DATABASE_URI'] = engine
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
-
-# placeholder lists of dictionaries till sql implementation
-
-# each user has a 'name' and 'status'
-users = {'testuser': {'name':'brian', 'status':'in pain'}}
-
-posts = {}  # posts have a 'title', 'caption' and 'song'
-
-# songs have a 'title' 'link' and 'artist'
-songdict = {'song1': {'title':'song1', 'link':'https://www.youtube.com/watch?v=5qap5aO4i9A', 'artist':'song1art'}, 
-            'song2': {'title':'song2', 'link':'https://www.youtube.com/watch?v=5qap5aO4i9A', 'artist':'song2art'}, 
-            'AAAAA': {'title':'SCALKS', 'link':'https://www.youtube.com/watch?v=lxoprelYHdo', 'artist':'formula1music'}}
-
 
 @app.get('/')
 def index():
