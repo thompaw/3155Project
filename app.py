@@ -3,21 +3,26 @@ from flask import Flask, redirect, render_template, request
 from models import db
 from blueprints.user_profile_blueprint import router as user_profile_router
 from blueprints.post_blueprint import router as post_router
+from blueprints.comment_blueprint import router as comment_router
 import os
 import spot
-app = Flask(__name__) #static_url_path='/static' (??) (ignore)
+import sqlalchemy
+
+
+app = Flask(__name__) # static_url_path='/static' (??) (ignore)
 
 # database connection stuffs below
 load_dotenv()
-import sqlalchemy
-engine = sqlalchemy.engine.URL.create(   #This is just the URI but separated. It all combines into variable engine.
+
+engine = sqlalchemy.engine.URL.create(   # This is just the URI but separated. It all combines into variable engine.
     drivername="mysql",
     username="root",
-    password=os.getenv('PASS'),          #put your sql server password in the .env file
+    password=os.getenv('PASS'),          # put your sql server password in the .env file
     host="localhost",
     port = "3306",
     database="Project"
 )
+
 app.config['SQLALCHEMY_DATABASE_URI'] = engine
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
@@ -107,3 +112,4 @@ if __name__ == "__main__":
 
 app.register_blueprint(user_profile_router)
 app.register_blueprint(post_router)
+app.register_blueprint(comment_router)
