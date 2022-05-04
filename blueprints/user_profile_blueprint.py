@@ -60,5 +60,11 @@ def delete_user_profile(user_id):
     print(user_id)
 
     db.session.delete(user_to_endit)
+
     db.session.commit()
-    return redirect('/user_profile', user_in_session = session['user']['user_id'])
+
+     # delete the user session
+    del session['user']
+
+    # redirect to landing page
+    return redirect('/')

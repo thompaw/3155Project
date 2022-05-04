@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 import email
 from logging import NullHandler
 from flask_sqlalchemy import SQLAlchemy
@@ -16,6 +17,16 @@ class Userprofile(db.Model):
     # Print out string for User information
     def __repr__(self):
         return f'userprofile({self.user_id}, {self.user_name}, {self.user_password}, {self.user_email})'
+
+    def __init__(self, user_name: str, user_password: str, user_email: str) -> None:
+        # required fields
+        self.user_name = user_name
+        self.user_password = user_password
+        self.user_email = user_email
+
+        # null fields
+        self.user_biography = NULL
+        self.user_location = NULL
 
 
 # Song table, holds the id as well as title and artist information.

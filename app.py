@@ -4,28 +4,22 @@ from flask import Flask, redirect, render_template, request, abort, session
 from models import Userprofile, db
 from blueprints.user_profile_blueprint import router as user_profile_router
 from blueprints.post_blueprint import router as post_router
+from blueprints.comment_blueprint import router as comment_router
 import os
-
 from flask_bcrypt import Bcrypt
 import spot
+import sqlalchemy
+
+
 app = Flask(__name__) #static_url_path='/static' (??) (ignore)
 bcrypt = Bcrypt(app)
 
 # database connection stuffs below
 load_dotenv()
-import sqlalchemy
-engine = sqlalchemy.engine.URL.create(   #This is just the URI but separated. It all combines into variable engine.
-    drivername="mysql",
-    username="root",
-    password=os.getenv('PASS'),          #put your sql server password in the .env file
-    host="localhost",
-    port = "3306",
-    database="Project"
-)
-app.config['SQLALCHEMY_DATABASE_URI'] = engine
+
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('CLEARDB_DATABASE_URL', 'sqlite:///test.db')
 app.config['SQLALCHEMY_TRACK_MODRIFICATIONS'] = False
 app.secret_key = os.getenv('SECRET_KEY')
-
 
 db.init_app(app)
 
@@ -72,7 +66,6 @@ def signup():
     if username == '' or email == '' or password == '':
         abort(400)
 
-
     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
     new_user = Userprofile(user_name=username, user_email=email, user_password=hashed_password)
@@ -110,7 +103,6 @@ def signin():
         'username': username,
         'user_id': existing_user.user_id
     }
-
 
     return redirect('/home')
 
@@ -191,3 +183,4 @@ if __name__ == "__main__":
 
 app.register_blueprint(user_profile_router)
 app.register_blueprint(post_router)
+app.register_blueprint(comment_router)
