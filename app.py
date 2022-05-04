@@ -23,19 +23,6 @@ app.secret_key = os.getenv('SECRET_KEY')
 
 db.init_app(app)
 
-# placeholder lists of dictionaries till sql implementation
-
-# each user has a 'name' and 'status'
-users = {'testuser': {'name':'brian', 'status':'in pain'}}
-
-posts = {}  # posts have a 'title', 'caption' and 'song'
-
-# songs have a 'title' 'link' and 'artist'
-songdict = {'song1': {'title':'song1', 'link':'https://www.youtube.com/watch?v=5qap5aO4i9A', 'artist':'song1art'}, 
-            'song2': {'title':'song2', 'link':'https://www.youtube.com/watch?v=5qap5aO4i9A', 'artist':'song2art'}, 
-            'AAAAA': {'title':'SCALKS', 'link':'https://www.youtube.com/watch?v=lxoprelYHdo', 'artist':'formula1music'}}
-
-
 # NOT IN USER SESSION
 
 # no session home page
