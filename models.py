@@ -17,6 +17,13 @@ class Userprofile(db.Model):
     def __repr__(self):
         return f'userprofile({self.user_id}, {self.user_name}, {self.user_password}, {self.user_email})'
 
+    def __init__(self, name, password, biography, location, email) -> None:
+        self.user_name = name
+        self.user_password = password
+        self.user_biography = biography
+        self.user_location = location
+        self.user_email = email
+
 
 # Song table, holds the id as well as title and artist information.
 class Song(db.Model):
@@ -28,6 +35,10 @@ class Song(db.Model):
     def __repr__(self):
         return f'song({self.song_id}, {self.artist}, {self.song_name})'
 
+    def __init__(self, artist_name, song_title) -> None:
+        self.artist = artist_name
+        self.song_name = song_title
+
 
 # Post table, keeps the id, user id, caption, and song id.
 class Post(db.Model):
@@ -38,9 +49,17 @@ class Post(db.Model):
     song_name = db.Column(db.String(255), nullable=False)
     song_artists = db.Column(db.String(255), nullable=False)
     song_link = db.Column(db.String(255), nullable=False)
+
     # Print out string for Post information
     def __repr__(self):
-        return f'post({self.post_id}, {self.user_id},{self.title}, {self.caption}, {self.song_name}, {self.song_artists}, {self.song_link})'    
+        return f'post({self.post_id}, {self.user_id},{self.title}, {self.caption}, {self.song_name}, {self.song_artists}, {self.song_link})'
+
+    def __init__(self, title, caption, song, artist, link) -> None: 
+        self.title = title
+        self.caption = caption
+        self.song_name = song
+        self.song_artists = artist
+        self.song_link = link    
 
 
 # Comment table, keeps comment id, user id, post id, and the conent of the comment.
@@ -53,6 +72,9 @@ class Comment(db.Model):
     # Print out string for Comment information
     def __repr__(self):
         return f'comment({self.follower_id}, {self.following_id})'
+
+    def __init__(self, content) -> None:
+        self.content = content
 
 # JUNCTION TABLE
 # Table for determining followers, used to track who follows who.
