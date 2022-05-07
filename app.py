@@ -5,6 +5,7 @@ from models import Userprofile, db
 from blueprints.user_profile_blueprint import router as user_profile_router
 from blueprints.post_blueprint import router as post_router
 from blueprints.comment_blueprint import router as comment_router
+from blueprints.google import router as google_router
 import os
 from flask_bcrypt import Bcrypt
 import spot
@@ -61,6 +62,8 @@ def get_signup_page():
     # if user is in session then redirect to home feed
     if 'user' in session:
         return redirect('/home')
+
+    
 
     return render_template('signup.html')
 
@@ -192,3 +195,4 @@ if __name__ == "__main__":
 app.register_blueprint(user_profile_router)
 app.register_blueprint(post_router)
 app.register_blueprint(comment_router)
+app.register_blueprint(google_router)
