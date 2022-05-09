@@ -4,7 +4,7 @@
 
 <div id="usrinfo">
     <!-- greeting for user-->
-    <h1 style = "display:inline-block;"> Welcome back, {{ user_in_session.user_name }}!</h1>
+    <h1 style = "display:inline-block;"> Welcome back, {{ currentuser.user_name }}!</h1>
     <div style = "float:right">
         <form action = '/post/songsearch' method='GET'>
             <button type="submit" class="btn btn-outline-primary" style = "display:inline-block;">Make a post</button>

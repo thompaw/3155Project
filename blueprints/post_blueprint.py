@@ -9,7 +9,7 @@ router = Blueprint('Post_router', __name__, url_prefix='/post')
 @router.get('') #TODO: output all posts in reverse order for main feed
 def get_all_Post():
     all_posts = Post.query.all()
-    return render_template('all_posts.html', posts = all_posts, user_in_session = session['user']['user_id'])
+    return render_template('all_posts.html', posts = all_posts, user_in_session = session['user']['user_id'], currentuser = Userprofile.query.get(session['user']['user_id']))
 
 @router.get('/<post_id>') #TODO: output single post
 def get_single_Post(post_id):
@@ -78,7 +78,7 @@ def update_post(post_id):
 def delete_post(post_id):
     post_to_delete = Post.query.get_or_404(post_id)
     comments_to_delete = Comment.query.filter_by(post_id=post_id).all()
-    for comment in comments_to_delete:
+    for comment in comments_to_delete: #you have to delete all comments related to that post before deleting the post
         db.session.delete(comment)
     db.session.delete(post_to_delete)
     db.session.commit()

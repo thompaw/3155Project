@@ -52,7 +52,7 @@ songdict = {'song1': {'title':'song1', 'link':'https://www.youtube.com/watch?v=5
 def get_index_page():
     # if user is in session then redirect to home feed
     if 'user' in session:
-            return redirect('/home')
+            return redirect('/post')
         
     return render_template('index.html')
 
@@ -61,7 +61,7 @@ def get_index_page():
 def get_signup_page():
     # if user is in session then redirect to home feed
     if 'user' in session:
-        return redirect('/home')
+        return redirect('/post')
 
     
 
@@ -91,7 +91,7 @@ def signup():
 def get_sigin_page():
     # if user is in session then redirect to home feed
     if 'user' in session:
-        return redirect('/home')
+        return redirect('/post')
     
     return render_template('signin.html')
 
@@ -115,7 +115,7 @@ def signin():
         'user_id': existing_user.user_id
     }
 
-    return redirect('/home')
+    return redirect('/post')
 
 # log out (end session)   
 @app.post('/logout')
@@ -134,7 +134,7 @@ def logout():
 @app.get('/fail')
 def fail():
     if 'user' in session:
-        return redirect('/home')
+        return redirect('/post')
 
     return render_template('fail.html')
 
@@ -144,12 +144,9 @@ def fail():
 # user session home page feed
 @app.get('/home')
 def get_home_page():
-    # if user is not logged in then abort
-    if 'user' not in session:
-        abort(401)
-    
+    # just redirects to post now just in case its left in the code somewhere. /post became the new /home
     # TODO pull recent posts to display on the front page
-    return render_template('home.html', user=users['testuser'], postlist=posts, user_in_session = session['user']['user_id'], user_in_session_name = session['user']['username'])
+    return redirect('/post')
 
 @app.get('/viewpost')
 def viewpost():
