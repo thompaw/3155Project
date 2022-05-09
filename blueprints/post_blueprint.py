@@ -1,7 +1,7 @@
 # Implement all CRUD elements
 # Reference this: https://github.com/jacobtie/itsc-3155-module-10-demo/blob/main/blueprints/book_blueprint.py
 from flask import Blueprint, abort, redirect, render_template, request
-from models import Post, db
+from models import Comment, Post, db
 import spot
 
 router = Blueprint('Post_router', __name__, url_prefix='/post')
@@ -14,7 +14,10 @@ def get_all_Post():
 @router.get('/<post_id>') #TODO: output single post
 def get_single_Post(post_id):
     single_post = Post.query.get_or_404(post_id)
-    return render_template('single_post.html', post = single_post)
+    comments = Comment.query.filter_by(post_id=post_id).all()
+    
+    print(comments)
+    return render_template('single_post.html', post = single_post, comments=comments)
 
 
 @router.post('') #TODO: create post with spotify implementation!!
@@ -25,18 +28,22 @@ def create_post():
     caption = request.form.get('post_caption', '')
     song = request.form.get('song_select', '')
     song = spot.single(song)
+
     song_name = song['name']
     artists = song['artists']
     artiststring = ''
+    song_image = song['album']['images'][0]['url']
     
-    for artist in artists:
-        artiststring = artiststring + artist['name'] + ', '
+    for x,artist in enumerate(artists):
+        artiststring = artiststring + artist['name']
+        if x != len(artists)-1:
+            artiststring = artiststring + ', '
     song_link = song['preview_url']
 
     if title == '' or song_name == '' or caption == '' or song_link == '' or artiststring== '':
         abort(400)
 
-    new_post = Post(user_id=user_id, title=title, caption=caption, song_name=song_name, song_artists=artiststring, song_link=song_link)
+    new_post = Post(user_id=user_id, title=title, caption=caption, song_name=song_name, song_artists=artiststring, song_link=song_link, song_image=song_image)
     db.session.add(new_post)
     db.session.commit()
     return redirect(f'/post/{new_post.post_id}')   

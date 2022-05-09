@@ -2,11 +2,13 @@
 
 {% block body %}
 
-<div>
+<div class = "centerofpage">
     <h2>{{ post.title }}</h2>
     <h4>{{ post.song_name }} by {{ post.song_artists }}</h4>
-    <audio controls src="{{ post.song_link }}">Your browser does not support the<code>audio</code> element.</audio>
-    <p>{{ post.caption }}</p>
+    <video controls poster='{{ post.song_image }}' >
+        <source src="{{ post.song_link }}" type= 'audio/mp3' style="background-color: black">
+    </video>
+    <h6>{{ post.caption }}</h6>
     
     <form action="/post/{{ post.post_id }}/delete" method = 'POST'>
         <button type="submit" class="btn btn-danger">Delete</button>
@@ -15,5 +17,19 @@
         <button type="submit" class="btn btn-outline-primary">Edit</button>
     </form>
 </div>
+<form action="/comment" method="POST">
+    <div class="mb-3">
+        <label for="commentbox" class="form-label">Comments:</label>
+        <textarea class="form-control" id="commentbox" rows="2" name="comment"></textarea>
+    </div>
+    <input type="hidden" id="postId" name="postId" value="{{ post.post_id }}">
+    <input type="submit">
+</form>
+
+{% if comments is not none %}
+    {% for comment in comments %}
+        <p>{{ comment.content }}</p>
+    {% endfor %}
+{% endif %}
 
 {% endblock %}
