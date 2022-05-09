@@ -2,12 +2,20 @@
 
 {% block body %}
 
+<div id="usrinfo">
+    <!-- greeting for user-->
+    <h1 style = "display:inline-block;"> Welcome back, {{ user_in_session.user_name }}!</h1>
+    <div style = "float:right">
+        <form action = '/post/songsearch' method='GET'>
+            <button type="submit" class="btn btn-outline-primary" style = "display:inline-block;">Make a post</button>
+        </form>
+    </div>
+    
+    <p><em>Where music meets your soul...</em></p> <!-- idk website tagline -->
+    <h3>Check out what you've been missing:</h3>
+</div>
 
-<h1 class="mb-3">All Posts</h1>
-<form action = '/post/songsearch' method='GET'>
-    <button type="submit" class="btn btn-outline-primary">Make a post</button>
-</form>
-{% for post in posts %}
+{% for post in posts|reverse %}
     <div>
         <a href="/post/{{ post.post_id }}">{{ post.title }}</a>
     </div>

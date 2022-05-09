@@ -1,6 +1,6 @@
 # Implement all CRUD elements
 # Reference this: https://github.com/jacobtie/itsc-3155-module-10-demo/blob/main/blueprints/book_blueprint.py
-from flask import Blueprint, abort, redirect, render_template, request
+from flask import Blueprint, abort, redirect, render_template, request, session
 from models import Comment, Post, Userprofile, db
 import spot
 
@@ -9,7 +9,7 @@ router = Blueprint('Post_router', __name__, url_prefix='/post')
 @router.get('') #TODO: output all posts in reverse order for main feed
 def get_all_Post():
     all_posts = Post.query.all()
-    return render_template('all_posts.html', posts = all_posts)
+    return render_template('all_posts.html', posts = all_posts, user_in_session = session['user']['user_id'])
 
 @router.get('/<post_id>') #TODO: output single post
 def get_single_Post(post_id):
@@ -18,17 +18,16 @@ def get_single_Post(post_id):
     commentUsernames=[]
     for comment in comments:
         commentUsernames.append(Userprofile.query.get(comment.user_id))
-
-
     
+    user = Userprofile.query.get_or_404(single_post.user_id)
     print(comments)
-    return render_template('single_post.html', post = single_post, comments=comments, usernames=commentUsernames)
+    return render_template('single_post.html', post = single_post, comments=comments, usernames=commentUsernames, postuser = user, user_in_session = session['user']['user_id'])
 
 
 @router.post('') #TODO: create post with spotify implementation!!
 def create_post():
     #post_id = Post.query.get_or_404(post_id)
-    user_id = 1 #get user session id
+    user_id = session['user']['user_id'] #get user session id
     title = request.form.get('post_title', '')
     caption = request.form.get('post_caption', '')
     song = request.form.get('song_select', '')
@@ -58,7 +57,7 @@ def create_post():
 @router.get('/<post_id>/edit') #TODO:edit parts of the title
 def get_edit_Post_form(post_id):
     post_to_edit = Post.query.get_or_404(post_id)
-    return render_template('editpost.html', post = post_to_edit)     
+    return render_template('editpost.html', post = post_to_edit, user_in_session = session['user']['user_id'])     
 
 @router.post('/<post_id>') #TODO: do the updating for the post
 def update_post(post_id):

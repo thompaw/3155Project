@@ -179,7 +179,7 @@ def createpost():
 
 @app.get('/post/songsearch')
 def songsearch():
-    return render_template('songsearch.html')
+    return render_template('songsearch.html', user_in_session = session['user']['user_id'])
 
 @app.get('/post/createpost') 
 def createpost_page():
@@ -187,7 +187,7 @@ def createpost_page():
     
     results = spot.output(query)
     #print(results)
-    return render_template('createpost.html', selection=results['tracks']['items'])
+    return render_template('createpost.html', selection=results['tracks']['items'], user_in_session = session['user']['user_id'])
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -30,17 +30,17 @@ def create_comment():  # taking data from the form
 #     return render_template('single_post.html', post=post_id, comments=comment_list)  # needs work
 
 
-# @router.get('/<comment_id>')  # single comment
-# def get_single_comment(comment_id):  # grab a single comment by it's id
-#     single_comment = Comment.query.get_or_404(comment_id).first()
-#     return render_template('comments/<comment_id>', comment=single_comment)
+@router.get('/<comment_id>/edit')  # single comment
+def get_single_comment(comment_id):  # grab a single comment by it's id
+    comment_to_edit = Comment.query.get_or_404(comment_id)
+    return render_template('editcomment.html', comment = comment_to_edit, user_in_session = session['user']['user_id'])
 
 # UPDATE
 @router.post('/<comment_id>')
 def update_comment(comment_id):
     updating_comment = Comment.query.get_or_404(comment_id)  # get the object to be updated
-
-    goop = request.form.get('content', '')  # get the new content from the edit form, yet to be implemented
+    post_id = updating_comment.post_id
+    goop = request.form.get('comment', '')  # get the new content from the edit form, yet to be implemented
 
     if goop == '':  # if the content of the comment is empty, don't accept it
         abort(400)
@@ -49,12 +49,14 @@ def update_comment(comment_id):
 
     db.session.commit()  # commit changes to the db
 
-    return redirect(f'comment/<comment_id>') # send the user to their new comment
+    return redirect(f'/post/{post_id}') # send the user to their new comment
 
 # DELETE
 @router.post('/<comment_id>/delete')
 def delete_comment(comment_id):
     comment_to_delete = Comment.query.get_or_404(comment_id)  # grab the comment id 
+    post_id = comment_to_delete.post_id
+    print(post_id)
     db.session.delete(comment_to_delete)  # delete the comment and then save changes. 
     db.session.commit()
-    return redirect('/<post_id>')  # return to the post that comment was on
+    return redirect(f'/post/{post_id}')  # return to the post that comment was on
