@@ -76,7 +76,12 @@ def signup():
 
     if username == '' or email == '' or password == '':
         abort(400)
-
+    
+    existing_username = Userprofile.query.filter_by(user_name=username).first()
+    existing_email = Userprofile.query.filter_by(user_email=email).first()
+    if existing_username or existing_email is not None:
+        return redirect('/fail')
+        
     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
     new_user = Userprofile(user_name=username, user_email=email, user_password=hashed_password)
