@@ -3,19 +3,24 @@
 {% block body %}
 
 <div class = "centerofpage">
-    <h2>{{ post.title }}</h2>
+    <h2 style = "display:inline-block">{{ post.title }}</h2>
+
+    <div style="float:right">
+        <form action="/post/{{ post.post_id }}/delete" method = 'POST' style = "display:inline-block; ">
+            <button type="submit" class="btn btn-danger" style="font-size:70%">Delete</button>
+        </form>
+        <form action="/post/{{ post.post_id }}/edit" method = 'GET' style = "display:inline-block">
+            <button type="submit" class="btn btn-outline-primary" style="font-size:70%;">Edit</button>
+        </form>
+    </div>
+    
     <h4>{{ post.song_name }} by {{ post.song_artists }}</h4>
     <video controls poster='{{ post.song_image }}' >
         <source src="{{ post.song_link }}" type= 'audio/mp3' style="background-color: black">
     </video>
     <h6>{{ post.caption }}</h6>
     
-    <form action="/post/{{ post.post_id }}/delete" method = 'POST'>
-        <button type="submit" class="btn btn-danger">Delete</button>
-    </form>
-    <form action="/post/{{ post.post_id }}/edit" method = 'GET'>
-        <button type="submit" class="btn btn-outline-primary">Edit</button>
-    </form>
+    
 </div>
 <form action="/comment" method="POST">
     <div class="mb-3">
@@ -28,6 +33,7 @@
 
 {% if comments is not none %}
     {% for comment in comments %}
+        <p>{{ usernames[loop.index-1].user_name }} </p>
         <p>{{ comment.content }}</p>
     {% endfor %}
 {% endif %}

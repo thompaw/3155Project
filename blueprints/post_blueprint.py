@@ -1,7 +1,7 @@
 # Implement all CRUD elements
 # Reference this: https://github.com/jacobtie/itsc-3155-module-10-demo/blob/main/blueprints/book_blueprint.py
 from flask import Blueprint, abort, redirect, render_template, request
-from models import Comment, Post, db
+from models import Comment, Post, Userprofile, db
 import spot
 
 router = Blueprint('Post_router', __name__, url_prefix='/post')
@@ -15,9 +15,14 @@ def get_all_Post():
 def get_single_Post(post_id):
     single_post = Post.query.get_or_404(post_id)
     comments = Comment.query.filter_by(post_id=post_id).all()
+    commentUsernames=[]
+    for comment in comments:
+        commentUsernames.append(Userprofile.query.get(comment.user_id))
+
+
     
     print(comments)
-    return render_template('single_post.html', post = single_post, comments=comments)
+    return render_template('single_post.html', post = single_post, comments=comments, usernames=commentUsernames)
 
 
 @router.post('') #TODO: create post with spotify implementation!!
@@ -73,6 +78,9 @@ def update_post(post_id):
 @router.post('/<post_id>/delete') #TODO: delete a post
 def delete_post(post_id):
     post_to_delete = Post.query.get_or_404(post_id)
+    comments_to_delete = Comment.query.filter_by(post_id=post_id).all()
+    for comment in comments_to_delete:
+        db.session.delete(comment)
     db.session.delete(post_to_delete)
     db.session.commit()
     return redirect('/post')
