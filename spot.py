@@ -23,16 +23,16 @@ def output(songname):
 
     # return render_template('songs.html', songs=results['tracks']['items']) <<<--- PAY ATTENTION TO THIS
 
-    '''In songs.html
-      {% for tracks in songs %} 
-          <h3>Name:{{ tracks.name }}</h3>
-          <h3>
-          {% for artist in tracks.artists %}
-              {{ artist.name }},
-          {% endfor %}
-          </h3>
-          <audio controls src="{{ tracks.preview_url }}">Your browser does not support the<code>audio</code> element.</audio>
-      {% endfor %}'''
+    # '''In songs.html
+    #   {% for tracks in songs %} 
+    #       <h3>Name:{{ tracks.name }}</h3>
+    #       <h3>
+    #       {% for artist in tracks.artists %}
+    #           {{ artist.name }},
+    #       {% endfor %}
+    #       </h3>
+    #       <audio controls src="{{ tracks.preview_url }}">Your browser does not support the<code>audio</code> element.</audio>
+    #   {% endfor %}'''
 
 def single(songid):
     return sp.track(track_id=songid)

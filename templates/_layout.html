@@ -19,12 +19,12 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/">Home</a>
+      <a class="navbar-brand" href="/post">Home</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav mr-auto">
 
           <!--go to sesson user profile-->
           <li class="nav-item">
@@ -35,23 +35,15 @@
           <li class="nav-item">
             <a class="nav-link{% if search_active %} active{% endif %}" href="/user_profile">Search</a>
           </li>
-
-          <!--go to following feed-->
-          <li class="nav-item">
-            <a class="nav-link{% if search_active %} active{% endif %}" href="/home">Feed</a>
-          </li>
-          
-          <!--create post link-->
-          <li class="nav-item">
-            <a class="nav-link{% if search_active %} active{% endif %}" href="#">Post</a>
-          </li>
-          
-          <li class="nav-item">
-            <a class="nav-link{% if search_active %} active{% endif %}" href="/post">All Posts</a>
-          </li>
-
+        </ul>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/post/songsearch">Make a post!</a>
+            </li>
         </ul>
       </div>
+      
     </div>
   </nav>
   <div class="container pt-4">
