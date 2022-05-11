@@ -26,7 +26,7 @@ engine = sqlalchemy.engine.URL.create(   #This is just the URI but separated. It
     port = "3306",
     database="Project"
 )
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('CLEARDB_DATABASE_URL')
+app.config['SQLALCHEMY_DATABASE_URI'] = engine
 app.config['SQLALCHEMY_TRACK_MODRIFICATIONS'] = False
 app.secret_key = os.getenv('SECRET_KEY')
 
