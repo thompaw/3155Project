@@ -102,34 +102,4 @@
 
         {% endfor %}
     {% endif %}
-</div>
-<form action="/comment" method="POST">
-    <div class="mb-3">
-        <label for="commentbox" class="form-label">Comments:</label>
-        <textarea class="form-control" id="commentbox" rows="2" name="comment"></textarea>
-    </div>
-    <input type="hidden" id="postId" name="postId" value="{{ post.post_id }}">
-    <input type="submit">
-</form>
-<br>
-{% if comments is not none %}
-    {% for comment in comments %}
-        <div style = "outline: 2px solid purple;">
-            <p style = "display:inline-block">{{ usernames[loop.index-1].user_name }} </p>
-            {% if comment.user_id == user_in_session %}
-            <form style = "display:inline-block" action = "/comment/{{ comment.comment_id }}/edit" method = 'GET'>
-                <a href='#' class="link-primary" onclick="this.parentNode.submit()">edit</a>
-            </form>
-            <form style = "display:inline-block" action = "/comment/{{ comment.comment_id }}/delete" method = 'POST'>
-                <a href='#' class="link-danger" onclick="this.parentNode.submit()">delete</a>
-            </form>
-            {% endif %}   
-            <p>{{ comment.content }}</p>
-        </div>
-        
-
-
-    {% endfor %}
-{% endif %}
-
 {% endblock %}
