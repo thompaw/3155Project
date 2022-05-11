@@ -2,8 +2,14 @@
 
 {% block body %}
 
+
+
 <h1 class="mb-3">All Users</h1>
-<table class="table">
+
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." class="form-control">
+
+
+<table class="table table-dark table-striped" id="myTable">
     <thead>
         <tr>
             <th>Name</th>
@@ -12,11 +18,35 @@
     <tbody>
         {% for user in users|reverse %}
             <tr>
-                <td><a href="/user_profile/{{ user.user_id }}">{{ user.user_name }}</a></td>
+                <td><a href="/user_profile/{{ user.user_id }}" class="userprofileLink">{{ user.user_name }}</a></td>
             </tr>
         {% endfor %}
     </tbody>
 </table>
+
+<script> 
+    function myFunction() {
+      // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+            }
+        }
+    }
+</script>
 
 
 
