@@ -2,25 +2,37 @@
 
 {% block body %}
 
-<div class = "centerofpage">
-    <h2 style = "display:inline-block">{{ post.title }} - {{ postuser.user_name }}</h2>
-
-    {% if post.user_id == user_in_session %}
-    <div style="float:right">
-        <form action="/post/{{ post.post_id }}/delete" method = 'POST' style = "display:inline-block; ">
-            <button type="submit" class="btn btn-danger" style="font-size:70%">Delete</button>
-        </form>
-        <form action="/post/{{ post.post_id }}/edit" method = 'GET' style = "display:inline-block">
-            <button type="submit" class="btn btn-outline-primary" style="font-size:70%;">Edit</button>
-        </form>
-    </div>
-    {% endif %}
     
-    <h4>{{ post.song_name }} by {{ post.song_artists }}</h4>
-    <video controls poster='{{ post.song_image }}' >
-        <source src="{{ post.song_link }}" type= 'audio/mp3' style="background-color: black">
-    </video>
-    <h6>{{ post.caption }}</h6>
+<div style="float:right">
+    <form action="/post/{{ post.post_id }}/delete" method = 'POST' style = "display:inline-block; ">
+        <button type="submit" class="btn btn-danger" style="font-size:70%">Delete</button>
+    </form>
+    <form action="/post/{{ post.post_id }}/edit" method = 'GET' style = "display:inline-block">
+        <button type="submit" class="btn btn-outline-primary" style="font-size:70%;">Edit</button>
+    </form>
+</div>
+
+    <div class="row align-items-center" style="height:500px">
+        <div class="col">
+            <video width="500" height="500" controls poster='{{ post.song_image }}' >
+                <source src="{{ post.song_link }}" type= 'audio/mp3' style="background-color: black">
+            </video>
+            <h5>{{ post.song_name }} by {{ post.song_artists }}</h5>
+
+        </div>
+        <div class="col" style="background-color:rgba(33, 33, 33, 0.856); height:450px;">
+
+            <h3>{{ post.title }} - {{ postuser.user_name }}</h3>
+            {% if post.user_id == user_in_session %}
+            
+            {% endif %}
+            <h5>{{ post.caption }}</h5>
+            
+        </div>
+    </div>
+
+    
+    
     
     
 <!-- comment stuff -->
