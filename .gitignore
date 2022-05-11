@@ -1,6 +1,7 @@
 # jacobite files to be ignored
 venv
 .DS_Store
+q
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
