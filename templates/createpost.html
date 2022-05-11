@@ -3,30 +3,41 @@
 {% block title %}Create Post{% endblock %}
 
 {% block body %}
-<div class="container">
-    <h1>Create a post below</h1>
-    <form action="/post" method="post" id="createform" name="createform">
+
+<h1 class="mb-3">Create Post:</h1>
+<div style="width:900px; background-color: rgba(33, 33, 33, 0.856); margin: 75px auto 200px auto; padding-top: 15px; padding-bottom: 15px;">
+    <form action="/post" method="post">
+        
         <!-- get the title and additional comments for the post-->
-        <input type="text" placeholder="Title" name="post_title" id="post_title" required>
-        <input type="text" placeholder="Caption" name="post_caption" id="post_caption"><br>
+        <div class="mb-3">
+            <label for="title" class="form-label" style="margin-left: 100px; font-size: larger;">Title:</label>
+            <input type="text" name="post_title" id="post_titles" class="form-control" autocomplete="off" style="width: 60%; margin: 0px auto 10px auto; padding: 10px;">
+        </div>
+        <div class="mb-3">
+            <label for="post_caption" class="form-label" style="margin-left: 100px; font-size: larger;">Caption:</label>
+            <br/>
+            <textarea name="post_caption" id="post_caption" class="from-control" autocomplete="off" value="" required style="width: 60%; margin-left: 180px; margin-right: auto;"></textarea>
+        </div>
 
-        <select name = "song_select" id="song_select" required>  
-            {% for tracks in selection %} 
-                {% if tracks.preview_url is not none %}
-                    <option name = "song_name" id="song_name" value='{{ tracks.id }}'>{{ tracks.name }} by
-                        {% for artist in tracks.artists %}
-                            , {{ artist.name }}
-                        {% endfor %}
-                    </option>
-                {% endif %}
-            {% endfor %}
-        </select><br>
-        <input type="submit" value="Create!">
+        <!-- Select song for post -->
+        <div class="mb-3">
+            <!-- <label for="song_selection" class="form-label" style="margin-left: 100px; font-size: larger;">Select Song:</label> -->
+            <br/>
+            <select name="song_select" id="song_select" required style="width: 60%; margin-left: 180px; margin-right: auto; padding: 10px; margin-bottom: 5px;">  
+                {% for tracks in selection %} 
+                    {% if tracks.preview_url is not none %}
+                        <option name = "song_name" id="song_name" value='{{ tracks.id }}'>{{ tracks.name }} by
+                            {% for artist in tracks.artists %}
+                                , {{ artist.name }}
+                            {% endfor %}
+                        </option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        
+        <button type="submit" class="btn btn-outline-primary" style="margin-left: 325px; width: 100px; margin-right: 10px;">Submit</button>
+        <button type="button" class="btn btn-outline-danger" style="width: 100px;" onclick="location.href='/'">Cancel</button>
     </form>
-
-    <form action="/" method="GET" id="cancel" name="cancel">
-        <input type="submit" value = "Cancel">
-    </form>
-    
-</div> 
+</div>
 {% endblock %}

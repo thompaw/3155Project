@@ -14,40 +14,120 @@
       background-color: rgb(17, 17, 17);
       color: white;
     }
+    .post
+    {
+      margin-bottom: 40px;
+      background-color: rgba(33, 33, 33, 0.856);
+      width: 1000px;
+      padding: 20px 25px 20px 25px;
+      margin: 15px auto 15px auto;
+    }
+    
+    .post:hover
+    {
+      background-color: rgb(56, 56, 56);
+    }
+
+    .abutton
+    {
+      height: 40px;
+      max-width: 50px;
+      padding-left: 50px;
+      padding-right:50px;
+      text-align: center;
+      border-radius: 5px;
+      background-color: rgba(139, 0, 139, 0.686);
+      color: white;
+      text-decoration: none;
+      font-size: larger;
+    }
+
+    .abutton:hover
+    {
+
+      background-color: rgb(139, 0, 139);
+      text-decoration: none;
+      color: white;
+    }
+
+    .userprofileLink
+    {
+      text-decoration: none;
+      color: rgb(255, 54, 255);
+    }
+
+    .userprofileLink:hover
+    {
+      color: darkmagenta;
+      text-decoration: none;
+    }
+    
+    table td p
+    {
+      margin-left: 750px;
+    }
+
+    .delete
+    {
+      background-color: red;
+    }
+
+    .delete:hover
+    {
+      background-color: darkred;
+      text-decoration: none;
+      color: white;
+    }
+
+    .navbar
+    {
+      position: fixed;
+      top: 0;
+      width: 100%;
+    }
+    header
+    {
+      padding-top: 15px;
+      padding-bottom: 30px;
+    }
   </style>
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="/post">Home</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-
-          <!--go to sesson user profile-->
-          <li class="nav-item">
-            <a class="nav-link{% if list_movies_active %} active{% endif %}" href="/user_profile/{{ user_in_session }}">Profile</a>
-          </li>
-
-          <!--search for users-->
-          <li class="nav-item">
-            <a class="nav-link{% if search_active %} active{% endif %}" href="/user_profile">Search</a>
-          </li>
-        </ul>
-      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-        <ul class="navbar-nav ms-auto">
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/post">Home</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+  
+            <!--go to sesson user profile-->
             <li class="nav-item">
-                <a class="nav-link" href="/post/songsearch">Make a post!</a>
+              <a class="nav-link{% if list_movies_active %} active{% endif %}" href="/user_profile/{{ user_in_session }}">Profile</a>
             </li>
-        </ul>
+  
+            <!--search for users-->
+            <li class="nav-item">
+              <a class="nav-link{% if search_active %} active{% endif %}" href="/user_profile">Search</a>
+            </li>
+          </ul>
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+          <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                  <a class="nav-link" href="/post/songsearch">Make a post!</a>
+              </li>
+          </ul>
+        </div>
+        
       </div>
-      
+    </nav>
+  </header>
+  <main>
+    <div class="container pt-4">
+      {% block body %}{% endblock %}
     </div>
-  </nav>
-  <div class="container pt-4">
-    {% block body %}{% endblock %}
-  </div>
+  </main>
 </body>
 </html>

@@ -2,56 +2,104 @@
 
 {% block body %}
 
-<div class = "centerofpage">
-    <h2 style = "display:inline-block">{{ post.title }} - {{ postuser.user_name }}</h2>
 
-    {% if post.user_id == user_in_session %}
-    <div style="float:right">
-        <form action="/post/{{ post.post_id }}/delete" method = 'POST' style = "display:inline-block; ">
-            <button type="submit" class="btn btn-danger" style="font-size:70%">Delete</button>
-        </form>
-        <form action="/post/{{ post.post_id }}/edit" method = 'GET' style = "display:inline-block">
-            <button type="submit" class="btn btn-outline-primary" style="font-size:70%;">Edit</button>
-        </form>
+    <div class="row align-items-center" style="background-color:rgba(33, 33, 33, 0.856); width: 1250px; margin: 30px auto 15px auto; padding: 35px 20px 35px 20px;">
+        {% if postuser.user_id == user_in_session %}
+            <table>
+                <tr>
+                    <td>
+                        <a class="userprofileLink" href="/user_profile/{{ postuser.user_id }}">
+                            <h3 style=" width: fit-content; margin-bottom: 15px;"> {{ postuser.user_name }}</h3>
+                        </a>
+                    </td>
+                    <td>
+                        <div style="float:right">
+                            <form action="/post/{{ post.post_id }}/edit" method = 'GET' style = "display:inline-block">
+                                <button type="submit" class="btn btn-outline-primary"  style="width: 95px; margin-left: 10px; margin-right: 10px;">Edit</button>
+                            </form>
+                            <form action="/post/{{ post.post_id }}/delete" method = 'POST' style = "display:inline-block; ">
+                                <button type="submit" class="btn btn-outline-danger"  style="width: 95px; margin-left: 10px; margin-right: 10px;">Delete</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        {% else %}
+            <a class="userprofileLink" href="/user_profile/{{ postuser.user_id }}">
+                <h3 style=" width: fit-content; margin-bottom: 15px;"> {{ postuser.user_name }}</h3>
+            </a>
+        {% endif %}
+        
+        <div class="col">
+            <video width="500" height="500" controls poster='{{ post.song_image }}' >
+                <source src="{{ post.song_link }}" type= 'audio/mp3' style="background-color: black">
+            </video>
+            <h5>{{ post.song_name }} by {{ post.song_artists }}</h5>
+
+        </div>
+
+        <div class="col" style="height:450px; margin-left: -10px;">
+
+            <h3>{{ post.title }} - {{ postuser.user_name }}</h3>
+            {% if post.user_id == user_in_session %}
+            
+            {% endif %}
+            <h5>{{ post.caption }}</h5>
+            
+        </div>
     </div>
-    {% endif %}
+
     
-    <h4>{{ post.song_name }} by {{ post.song_artists }}</h4>
-    <video controls poster='{{ post.song_image }}' >
-        <source src="{{ post.song_link }}" type= 'audio/mp3' style="background-color: black">
-    </video>
-    <h6>{{ post.caption }}</h6>
+    
     
     
 <!-- comment stuff -->
-</div>
-<form action="/comment" method="POST">
-    <div class="mb-3">
-        <label for="commentbox" class="form-label">Comments:</label>
-        <textarea class="form-control" id="commentbox" rows="2" name="comment"></textarea>
-    </div>
-    <input type="hidden" id="postId" name="postId" value="{{ post.post_id }}">
-    <input type="submit">
-</form>
-<br>
-{% if comments is not none %}
-    {% for comment in comments %}
-        <div style = "outline: 2px solid purple;">
-            <p style = "display:inline-block">{{ usernames[loop.index-1].user_name }} </p>
-            {% if comment.user_id == user_in_session %}
-            <form style = "display:inline-block" action = "/comment/{{ comment.comment_id }}/edit" method = 'GET'>
-                <a href='#' class="link-primary" onclick="this.parentNode.submit()">edit</a>
-            </form>
-            <form style = "display:inline-block" action = "/comment/{{ comment.comment_id }}/delete" method = 'POST'>
-                <a href='#' class="link-danger" onclick="this.parentNode.submit()">delete</a>
-            </form>
-            {% endif %}   
-            <p>{{ comment.content }}</p>
+
+<div style="width: 1250px; margin: 30px auto 15px auto; padding: 35px 20px 35px 20px;">
+    <form action="/comment" method="POST">
+        <div class="mb-3">
+            <label for="commentbox" class="form-label">Comments:</label>
+            <textarea class="form-control" id="commentbox" rows="2" name="comment" style="border-radius: 0;"></textarea>
         </div>
-        
+        <input type="hidden" id="postId" name="postId" value="{{ post.post_id }}">
+        <input class="btn btn-outline-primary" type="submit" value="Submit" style="width: 95px; margin-left: 10px; margin-right: 10px;">
+    </form>
+    <br>
+    {% if comments is not none %}
+        {% for comment in comments %}
+            <div style = "outline: 2px solid rgb(66, 0, 66); background-color: rgba(33, 33, 33, 0.856); margin: 15px auto 15px auto; padding: 10px 25px 10px 20px;">
+                
+                {% if comment.user_id == user_in_session %}
+                    <table>
+                        <tr>
+                            <td>
+                                <a class="userprofileLink" href="/user_profile/{{ usernames[loop.index-1].user_id }}">
+                                    <h4 style = "display:inline-block">{{ usernames[loop.index-1].user_name }} </h4>
+                                </a>
+                            </td>
+                            <td>
+                                <div style="margin-left: 950px;">
+                                    <form style = "display:inline-block" action = "/comment/{{ comment.comment_id }}/edit" method = 'GET'>
+                                        <a href='#' class="link-primary" onclick="this.parentNode.submit()" style="margin-right: 10px;">edit</a>
+                                    </form>
+                                    <form style = "display:inline-block" action = "/comment/{{ comment.comment_id }}/delete" method = 'POST'>
+                                        <a href='#' class="link-danger" onclick="this.parentNode.submit()">delete</a>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                {% else %}
+                    <a class="userprofileLink" href="/user_profile/{{ usernames[loop.index-1].user_id }}">
+                        <h4 style = "display:inline-block">{{ usernames[loop.index-1].user_name }} </h4>
+                    </a>
+                {% endif %}   
+
+                <p style="margin-left: 15px;">{{ comment.content }}</p>
+            </div>
+            
 
 
-    {% endfor %}
-{% endif %}
-
+        {% endfor %}
+    {% endif %}
 {% endblock %}

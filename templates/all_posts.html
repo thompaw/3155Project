@@ -2,23 +2,106 @@
 
 {% block body %}
 
-<div id="usrinfo">
+<!-- Learned this from https://www.w3schools.com/howto/howto_js_filter_table.asp -->
+
+<div id="usrinfo" style="margin-bottom: 50px; margin-left: 150px;">
     <!-- greeting for user-->
     <h1 style = "display:inline-block;"> Welcome back, {{ currentuser.user_name }}!</h1>
-    <div style = "float:right">
+    <!-- <div style = "float:right">
         <form action = '/post/songsearch' method='GET'>
             <button type="submit" class="btn btn-outline-primary" style = "display:inline-block;">Make a post</button>
         </form>
-    </div>
+    </div> -->
     
     <p><em>Where music meets your soul...</em></p> <!-- idk website tagline -->
-    <h3>Check out what you've been missing:</h3>
+    <h4>Check out what you've been missing:</h4>
 </div>
 
-{% for post in posts|reverse %}
-    <div>
-        <a href="/post/{{ post.post_id }}">{{ post.title }}</a>
-    </div>
-{% endfor %}
+{% if users is not none %}
+    {% for post in posts %}
+        {% if post.user_id == currentuser.user_id %}
+                <!-- Link the whole div box to go to the individual post -->
+                <a href="/post/{{ post.post_id }}" style="text-decoration: none; color: white;">
+
+                    <!-- post information -->
+                    <div class="container post">
+                        <!-- User details for the post-->
+                        <table>
+                            <tr>
+                                <td>
+                                    <h3 style=" width: fit-content;"> {{ users[loop.index-1].user_name }}</h3>
+                                </td>
+                                <td>
+                                    <p>
+                                        Click to Change
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+                    
+        
+        
+                        <div class="container" style="margin-top: 15px;">
+                            <!-- post details-->
+        
+                            <div class="row">
+                                <div class="col">
+                                    <div class="container">
+                                        <!-- area for the song-->
+                                        <video width="300px" height="300px" controls poster='{{ post.song_image }}'>
+                                            <source src="{{ post.song_link }}" type= 'audio/mp3' style="background-color: black">
+                                        </video>
+                
+                                        <h5> {{ post.song_name }}</h5>
+                                        <h6> {{ post.song_artists }}</h6>
+                                    </div>
+                                </div>
+                                <div class="col" style="padding-left: 0; margin-left: -150px;">
+                                    <h4> {{ post.title }}</h4>
+                                    <p> {{ post.caption }}</p>
+                                </div>
+                            </div>
+                        </div>
+        
+                    </div>
+                </a>
+        {% else %}
+
+        <!-- Link the whole div box to go to the individual post -->
+        <a href="/post/{{ post.post_id }}" style="text-decoration: none; color: white;">
+
+            <!-- post information -->
+            <div class="container post">
+                <!-- User details for the post-->
+                <h3 style=" width: fit-content;"> {{ users[loop.index - 1].user_name }}</h3>
+
+
+                <div class="container" style="margin-top: 15px;">
+                    <!-- post details-->
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="container">
+                                <!-- area for the song-->
+                                <video width="300px" height="300px" controls poster='{{ post.song_image }}'>
+                                    <source src="{{ post.song_link }}" type= 'audio/mp3' style="background-color: black">
+                                </video>
+        
+                                <h5> {{ post.song_name }}</h5>
+                                <h6> {{ post.song_artists }}</h6>
+                            </div>
+                        </div>
+                        <div class="col" style="padding-left: 0; margin-left: -150px;">
+                            <h4> {{ post.title }}</h4>
+                            <p> {{ post.caption }}</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </a>
+        {% endif %}
+    {% endfor %}
+{% endif %}
 
 {% endblock %}

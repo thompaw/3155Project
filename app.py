@@ -146,12 +146,6 @@ def get_home_page():
     # TODO pull recent posts to display on the front page
     return redirect('/post')
 
-@app.get('/viewpost')
-def viewpost():
-    # TODO figure out which post is being viewed, and find the corresponding user. 
-    # TODO then find the song being listed in the post
-    # TODO input these to the template
-    return render_template('viewpost.html', user=users['testuser'], post=posts['agony'], song=songdict['song1'])
 
 @app.post('/createpost')
 def createpost():

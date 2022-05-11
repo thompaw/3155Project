@@ -5,13 +5,19 @@
 {% block body %}
 
 
-<form action="/comment/{{ comment.comment_id }}" method="post">
-    <div class="mb-3">
-        <label for="comment" class="form-label">Edit your comment:</label>
-        <input type="text" name="comment" id="comment" class="form-control" autocomplete="off" required value="{{ comment.content }}">
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+<h1 class="mb-3">Edit Comment:"</h1>
+<div style="width:900px; background-color: rgba(33, 33, 33, 0.856); margin: 75px auto 200px auto; padding-top: 15px; padding-bottom: 15px;">
+    <form action="/comment/{{ comment.comment_id }}" method="post">
+        <div class="mb-3">
+            <label for="comment" class="form-label" style="margin-left: 100px; font-size: larger;">Comment:</label>
+            <br/>
+            <textarea name="comment" id="comment" class="from-control" autocomplete="off" value="{{ comment.content }}" required style="width: 60%; margin-left: 180px; margin-right: auto;"></textarea>
+        </div>
+        
+        <button type="submit" class="btn btn-outline-primary" style="margin-left: 325px; width: 100px; margin-right: 10px;">Submit</button>
+        <button type="button" class="btn btn-outline-danger" style="width: 100px;" onclick="window.location.href='/post'">Cancel</button>
+    </form>
+</div>
 
 
 {% endblock %}

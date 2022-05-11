@@ -1,7 +1,7 @@
 # Implement all CRUD elements
 # Reference this: https://github.com/jacobtie/itsc-3155-module-10-demo/blob/main/blueprints/book_blueprint.py
 from flask import Blueprint, abort, redirect, render_template, request, session
-from models import Comment, Post, Userprofile, db
+from models import Comment, Follower, Post, Userprofile, db
 
 router = Blueprint('user_profile_router', __name__, url_prefix='/user_profile')
 
@@ -21,10 +21,18 @@ def get_single_user_profile(user_id):
     # if the user is not logged in it aborts to 401
     if not 'user' in session:
         abort(401)
-
+    followercount = Follower.query.filter_by(following_id=user_id).count()
     single_user_profile = Userprofile.query.get_or_404(user_id)
     
-    return render_template('single_user_profile.html', user = single_user_profile, user_in_session = session['user']['user_id'])
+    isFollowing = False
+    x = Follower.query.filter_by(follower_id=session['user']['user_id'], following_id=user_id).first()
+    if x is not None:
+        isFollowing = True
+    
+    postnum = Post.query.filter_by(user_id=user_id).count()
+    followingcount = Follower.query.filter_by(follower_id=user_id).count()
+
+    return render_template('single_user_profile.html', user = single_user_profile, user_in_session = session['user']['user_id'], followercount = followercount, postnum = postnum, followingcount = followingcount, isFollowing = isFollowing)
 
 # Hirdhay
 @router.get('/<user_id>/edit')
@@ -72,6 +80,14 @@ def delete_user_profile(user_id):
     for comment in comments_by_user:
         db.session.delete(comment)
 
+    follow1 = Follower.query.filter_by(follower_id=user_to_endit.user_id).all()
+    follow2 = Follower.query.filter_by(following_id=user_to_endit.user_id).all()
+    #delete from follower-follower
+    for follow in follow1:
+        db.session.delete(follow)
+    for follow in follow2:
+        db.session.delete(follow)
+
     #sign user out
     if 'user' not in session:
         abort(401)
@@ -84,3 +100,24 @@ def delete_user_profile(user_id):
     db.session.commit()
 
     return redirect('/')
+
+@router.post('/<user_id>/follow')
+def follow_user(user_id):
+    follower_id = session['user']['user_id']
+    following_id = user_id
+
+    already = Follower.query.filter_by(follower_id=follower_id, following_id=following_id).first()
+    print(already)
+
+
+    if already is not None:
+        db.session.delete(already)
+    else:
+        new = Follower(follower_id=follower_id, following_id=following_id)
+        db.session.add(new)
+
+    db.session.commit()
+
+
+    return redirect(f'/user_profile/{user_id}')
+
