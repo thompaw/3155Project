@@ -38,7 +38,7 @@
                     <p class="text-center">Posts</p>
                 </div>
                 <div class="col-md-4">
-                    <h4 class="text-center">602</h4>
+                    <h4 class="text-center">{{ followercount }}</h4>
                     <p class="text-center">Followers</p>
                 </div>
                 <div class="col-md-4">
@@ -57,8 +57,13 @@
             <div class="col-md-4"></div>
             <div class="col-md-4">
                 <div class="d-grid gap-2 d-md-block text-center">
-                    <button class="btn btn-outline-primary" type="button"  style="width: 95px; margin-left: 10px; margin-right: 10px;" action="#">Follow</button>
-                    <button class="btn btn-outline-primary" type="button"  style="width: 95px; margin-left: 10px; margin-right: 10px;" action="#">Message</button>
+                    <form action="/user_profile/{{ user.user_id }}/follow" method = 'POST'>
+                        {% if isFollowing == false %}
+                        <button class="btn btn-outline-primary" type="submit"  style="width: 95px; margin-left: 10px; margin-right: 10px;">Follow</button>
+                        {% else %}
+                        <button class="btn btn-outline-primary" type="submit"  style="width: 95px; margin-left: 10px; margin-right: 10px;">Following</button>
+                        {% endif %}
+                    </form>
                 </div>
             </div>
             <div class="col-md-4"></div>
