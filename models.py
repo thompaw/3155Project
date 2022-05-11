@@ -1,6 +1,3 @@
-from asyncio.windows_events import NULL
-import email
-from logging import NullHandler
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -25,8 +22,8 @@ class Userprofile(db.Model):
         self.user_email = user_email
 
         # null fields
-        self.user_biography = NULL
-        self.user_location = NULL
+        self.user_biography = None
+        self.user_location = None
 
 # Song table, holds the id as well as title and artist information.
 class Song(db.Model):
