@@ -26,11 +26,13 @@ def get_single_user_profile(user_id):
     
     isFollowing = False
     x = Follower.query.filter_by(follower_id=session['user']['user_id'], following_id=user_id).first()
-    print(x)
     if x is not None:
         isFollowing = True
     
-    return render_template('single_user_profile.html', user = single_user_profile, user_in_session = session['user']['user_id'], followercount = followercount, isFollowing = isFollowing)
+    postnum = Post.query.filter_by(user_id=user_id).count()
+    followingcount = Follower.query.filter_by(follower_id=user_id).count()
+
+    return render_template('single_user_profile.html', user = single_user_profile, user_in_session = session['user']['user_id'], followercount = followercount, postnum = postnum, followingcount = followingcount, isFollowing = isFollowing)
 
 # Hirdhay
 @router.get('/<user_id>/edit')
@@ -77,6 +79,14 @@ def delete_user_profile(user_id):
     #have to delete all comments made by said user
     for comment in comments_by_user:
         db.session.delete(comment)
+
+    follow1 = Follower.query.filter_by(follower_id=user_to_endit.user_id).all()
+    follow2 = Follower.query.filter_by(following_id=user_to_endit.user_id).all()
+    #delete from follower-follower
+    for follow in follow1:
+        db.session.delete(follow)
+    for follow in follow2:
+        db.session.delete(follow)
 
     #sign user out
     if 'user' not in session:
