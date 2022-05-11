@@ -18,6 +18,9 @@ bcrypt = Bcrypt(app)
 # database connection stuffs below
 load_dotenv()
 
+
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('CLEARDB_DATABASE_URL', 'sqlite:///test.db')
+
 engine = sqlalchemy.engine.URL.create(   #This is just the URI but separated. It all combines into variable engine.
     drivername="mysql",
     username="root",
@@ -27,23 +30,11 @@ engine = sqlalchemy.engine.URL.create(   #This is just the URI but separated. It
     database="Project"
 )
 app.config['SQLALCHEMY_DATABASE_URI'] = engine
+
 app.config['SQLALCHEMY_TRACK_MODRIFICATIONS'] = False
 app.secret_key = os.getenv('SECRET_KEY')
 
 db.init_app(app)
-
-# placeholder lists of dictionaries till sql implementation
-
-# each user has a 'name' and 'status'
-users = {'testuser': {'name':'brian', 'status':'in pain'}}
-
-posts = {}  # posts have a 'title', 'caption' and 'song'
-
-# songs have a 'title' 'link' and 'artist'
-songdict = {'song1': {'title':'song1', 'link':'https://www.youtube.com/watch?v=5qap5aO4i9A', 'artist':'song1art'}, 
-            'song2': {'title':'song2', 'link':'https://www.youtube.com/watch?v=5qap5aO4i9A', 'artist':'song2art'}, 
-            'AAAAA': {'title':'SCALKS', 'link':'https://www.youtube.com/watch?v=lxoprelYHdo', 'artist':'formula1music'}}
-
 
 # NOT IN USER SESSION
 
@@ -76,12 +67,13 @@ def signup():
 
     if username == '' or email == '' or password == '':
         abort(400)
-    
+
     existing_username = Userprofile.query.filter_by(user_name=username).first()
     existing_email = Userprofile.query.filter_by(user_email=email).first()
     if existing_username or existing_email is not None:
         return redirect('/fail')
         
+
     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
     new_user = Userprofile(user_name=username, user_email=email, user_password=hashed_password)
@@ -121,6 +113,7 @@ def signin():
     }
 
     return redirect('/post')
+
 
 # log out (end session)   
 @app.post('/logout')
