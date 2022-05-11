@@ -3,20 +3,27 @@
 {% block body %}
 
 <h1 class="mb-3">All Users</h1>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Name</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for user in users|reverse %}
+{% if users|length > 1 %}
+    <table class="table">
+        <thead>
             <tr>
-                <td><a href="/user_profile/{{ user.user_id }}">{{ user.user_name }}</a></td>
+                <th>Name</th>
             </tr>
-        {% endfor %}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            {% for user in users|reverse %}
+                {% if user.user_id != user_in_session %}
+                    <tr>
+                        <td><a href="/user_profile/{{ user.user_id }}">{{ user.user_name }}</a></td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>You are the first user!</p>
+{% endif %}
+
 
 
 

@@ -1,0 +1,28 @@
+name: Test on PR
+
+on:                   # triggers action
+  pull_request:       # on pull request pull from main branch
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  test_branch:
+    name: Test Branch
+    runs-on: ubuntu-latest    # when running test branch stuff run it on a linux computer
+    steps: 
+      - name: Checkout repo
+        uses: actions/checkout@v3 # checkouts code from whatever pull request just made
+
+      - name: Setup Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.10'  # install python (think like it is a fresh directory/OS)
+
+      - name: Install requirements
+        run: pip install -r requirements.txt
+
+      - name: Run tests
+        run: pytest

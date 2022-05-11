@@ -80,5 +80,7 @@ def delete_user_profile(user_id):
     del session['user']
     #finally delete user
     db.session.delete(user_to_endit)
+
     db.session.commit()
+
     return redirect('/')

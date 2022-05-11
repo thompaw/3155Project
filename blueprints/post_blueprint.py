@@ -11,6 +11,7 @@ def get_all_Post():
     all_posts = Post.query.all()
     return render_template('all_posts.html', posts = all_posts, user_in_session = session['user']['user_id'], currentuser = Userprofile.query.get(session['user']['user_id']))
 
+
 @router.get('/<post_id>') #TODO: output single post
 def get_single_Post(post_id):
     single_post = Post.query.get_or_404(post_id)
