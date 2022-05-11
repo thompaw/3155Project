@@ -49,17 +49,18 @@ class Post(db.Model):
     song_name = db.Column(db.String(255), nullable=False)
     song_artists = db.Column(db.String(255), nullable=False)
     song_link = db.Column(db.String(255), nullable=False)
-
+    song_image = db.Column(db.String(255), nullable=False)
+    
     # Print out string for Post information
     def __repr__(self):
-        return f'post({self.post_id}, {self.user_id},{self.title}, {self.caption}, {self.song_name}, {self.song_artists}, {self.song_link})'
-
+        return f'post({self.post_id}, {self.user_id},{self.title}, {self.caption}, {self.song_name}, {self.song_artists}, {self.song_link}, {self.song_image})' 
+      
     def __init__(self, title, caption, song, artist, link) -> None: 
         self.title = title
         self.caption = caption
         self.song_name = song
         self.song_artists = artist
-        self.song_link = link    
+        self.song_link = link   
 
 
 # Comment table, keeps comment id, user id, post id, and the conent of the comment.
@@ -71,7 +72,7 @@ class Comment(db.Model):
 
     # Print out string for Comment information
     def __repr__(self):
-        return f'comment({self.follower_id}, {self.following_id})'
+        return f'comment({self.comment_id}, {self.user_id}, {self.post_id}, {self.content} )'
 
     def __init__(self, content) -> None:
         self.content = content

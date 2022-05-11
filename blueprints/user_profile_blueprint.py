@@ -1,7 +1,7 @@
 # Implement all CRUD elements
 # Reference this: https://github.com/jacobtie/itsc-3155-module-10-demo/blob/main/blueprints/book_blueprint.py
 from flask import Blueprint, abort, redirect, render_template, request, session
-from models import Userprofile, db
+from models import Comment, Post, Userprofile, db
 
 router = Blueprint('user_profile_router', __name__, url_prefix='/user_profile')
 
@@ -57,14 +57,30 @@ def update_user_profile(user_id):
 def delete_user_profile(user_id):
     print("here" + user_id)
     user_to_endit = Userprofile.query.get_or_404(user_id)
-    print(user_id)
 
+    #must delete all posts made by user and all comments related to post made by said user
+    posts_to_delete = Post.query.filter_by(user_id=user_to_endit.user_id).all() 
+    for post in posts_to_delete: #you have to delete all comments related to that post before deleting the post
+        comments_to_delete = Comment.query.filter_by(post_id=post.post_id).all()
+        for comment in comments_to_delete: #you have to delete all comments related to that post before deleting the post
+            db.session.delete(comment)
+        db.session.delete(post)
+    
+    comments_by_user = Comment.query.filter_by(user_id=user_to_endit.user_id).all()
+
+    #have to delete all comments made by said user
+    for comment in comments_by_user:
+        db.session.delete(comment)
+
+    #sign user out
+    if 'user' not in session:
+        abort(401)
+
+    # delete the user session
+    del session['user']
+    #finally delete user
     db.session.delete(user_to_endit)
 
     db.session.commit()
 
-     # delete the user session
-    del session['user']
-
-    # redirect to landing page
     return redirect('/')

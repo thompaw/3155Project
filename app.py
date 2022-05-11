@@ -5,6 +5,7 @@ from models import Userprofile, db
 from blueprints.user_profile_blueprint import router as user_profile_router
 from blueprints.post_blueprint import router as post_router
 from blueprints.comment_blueprint import router as comment_router
+from blueprints.google import router as google_router
 import os
 from flask_bcrypt import Bcrypt
 import spot
@@ -17,7 +18,19 @@ bcrypt = Bcrypt(app)
 # database connection stuffs below
 load_dotenv()
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('CLEARDB_DATABASE_URL', 'sqlite:///test.db')
+
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('CLEARDB_DATABASE_URL', 'sqlite:///test.db')
+
+engine = sqlalchemy.engine.URL.create(   #This is just the URI but separated. It all combines into variable engine.
+    drivername="mysql",
+    username="root",
+    password=os.getenv('PASS'),          #put your sql server password in the .env file
+    host="localhost",
+    port = "3306",
+    database="Project"
+)
+app.config['SQLALCHEMY_DATABASE_URI'] = engine
+
 app.config['SQLALCHEMY_TRACK_MODRIFICATIONS'] = False
 app.secret_key = os.getenv('SECRET_KEY')
 
@@ -30,7 +43,7 @@ db.init_app(app)
 def get_index_page():
     # if user is in session then redirect to home feed
     if 'user' in session:
-            return redirect('/home')
+            return redirect('/post')
         
     return render_template('index.html')
 
@@ -39,7 +52,9 @@ def get_index_page():
 def get_signup_page():
     # if user is in session then redirect to home feed
     if 'user' in session:
-        return redirect('/home')
+        return redirect('/post')
+
+    
 
     return render_template('signup.html')
 
@@ -52,6 +67,12 @@ def signup():
 
     if username == '' or email == '' or password == '':
         abort(400)
+
+    existing_username = Userprofile.query.filter_by(user_name=username).first()
+    existing_email = Userprofile.query.filter_by(user_email=email).first()
+    if existing_username or existing_email is not None:
+        return redirect('/fail')
+        
 
     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
@@ -67,7 +88,7 @@ def signup():
 def get_sigin_page():
     # if user is in session then redirect to home feed
     if 'user' in session:
-        return redirect('/home')
+        return redirect('/post')
     
     return render_template('signin.html')
 
@@ -91,7 +112,8 @@ def signin():
         'user_id': existing_user.user_id
     }
 
-    return redirect('/home')
+    return redirect('/post')
+
 
 # log out (end session)   
 @app.post('/logout')
@@ -110,7 +132,7 @@ def logout():
 @app.get('/fail')
 def fail():
     if 'user' in session:
-        return redirect('/home')
+        return redirect('/post')
 
     return render_template('fail.html')
 
@@ -120,12 +142,9 @@ def fail():
 # user session home page feed
 @app.get('/home')
 def get_home_page():
-    # if user is not logged in then abort
-    if 'user' not in session:
-        abort(401)
-    
+    # just redirects to post now just in case its left in the code somewhere. /post became the new /home
     # TODO pull recent posts to display on the front page
-    return render_template('home.html', user=users['testuser'], postlist=posts, user_in_session = session['user']['user_id'], user_in_session_name = session['user']['username'])
+    return redirect('/post')
 
 @app.get('/viewpost')
 def viewpost():
@@ -155,7 +174,7 @@ def createpost():
 
 @app.get('/post/songsearch')
 def songsearch():
-    return render_template('songsearch.html')
+    return render_template('songsearch.html', user_in_session = session['user']['user_id'])
 
 @app.get('/post/createpost') 
 def createpost_page():
@@ -163,7 +182,7 @@ def createpost_page():
     
     results = spot.output(query)
     #print(results)
-    return render_template('createpost.html', selection=results['tracks']['items'])
+    return render_template('createpost.html', selection=results['tracks']['items'], user_in_session = session['user']['user_id'])
 
 if __name__ == "__main__":
     app.run(debug=True)
@@ -171,3 +190,4 @@ if __name__ == "__main__":
 app.register_blueprint(user_profile_router)
 app.register_blueprint(post_router)
 app.register_blueprint(comment_router)
+app.register_blueprint(google_router)

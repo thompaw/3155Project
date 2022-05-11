@@ -28,6 +28,7 @@ CREATE TABLE post( /* post table, keeps the id, user id, caption, and song id*/
     song_name varchar(255) NOT NULL,
     song_artists varchar(255) NOT NULL,
     song_link varchar(255) NOT NULL,
+    song_image varchar(255) NOT NULL,
     PRIMARY KEY(post_id),
     FOREIGN KEY (user_id) REFERENCES userprofile(user_id)
 );
