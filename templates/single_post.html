@@ -57,7 +57,7 @@
     <form action="/comment" method="POST">
         <div class="mb-3">
             <label for="commentbox" class="form-label">Comments:</label>
-            <textarea class="form-control" id="commentbox" rows="2" name="comment"></textarea>
+            <textarea class="form-control" id="commentbox" rows="2" name="comment" style="border-radius: 0;"></textarea>
         </div>
         <input type="hidden" id="postId" name="postId" value="{{ post.post_id }}">
         <input class="btn btn-outline-primary" type="submit" value="Submit" style="width: 95px; margin-left: 10px; margin-right: 10px;">
@@ -65,17 +65,33 @@
     <br>
     {% if comments is not none %}
         {% for comment in comments %}
-            <div style = "outline: 2px solid purple; background-color: rgba(33, 33, 33, 0.856);">
-                <h5 style = "display:inline-block">{{ usernames[loop.index-1].user_name }} </h5>
+            <div style = "outline: 2px solid rgb(66, 0, 66); background-color: rgba(33, 33, 33, 0.856); margin: 15px auto 15px auto; padding: 10px 25px 10px 20px;">
+                
                 {% if comment.user_id == user_in_session %}
-                <form style = "display:inline-block" action = "/comment/{{ comment.comment_id }}/edit" method = 'GET'>
-                    <a href='#' class="link-primary" onclick="this.parentNode.submit()">edit</a>
-                </form>
-                <form style = "display:inline-block" action = "/comment/{{ comment.comment_id }}/delete" method = 'POST'>
-                    <a href='#' class="link-danger" onclick="this.parentNode.submit()">delete</a>
-                </form>
+                    <table>
+                        <tr>
+                            <td>
+                                <a class="userprofileLink" href="/user_profile/{{ usernames[loop.index-1].user_id }}">
+                                    <h4 style = "display:inline-block">{{ usernames[loop.index-1].user_name }} </h4>
+                                </a>
+                            </td>
+                            <td style="margin-left: 500px;">
+                                <form style = "display:inline-block" action = "/comment/{{ comment.comment_id }}/edit" method = 'GET'>
+                                    <a href='#' class="link-primary" onclick="this.parentNode.submit()">edit</a>
+                                </form>
+                                <form style = "display:inline-block" action = "/comment/{{ comment.comment_id }}/delete" method = 'POST'>
+                                    <a href='#' class="link-danger" onclick="this.parentNode.submit()">delete</a>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
+                {% else %}
+                    <a class="userprofileLink" href="/user_profile/{{ usernames[loop.index-1].user_id }}">
+                        <h4 style = "display:inline-block">{{ usernames[loop.index-1].user_name }} </h4>
+                    </a>
                 {% endif %}   
-                <p>{{ comment.content }}</p>
+
+                <p style="margin-left: 15px;">{{ comment.content }}</p>
             </div>
             
 
