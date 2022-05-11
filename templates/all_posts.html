@@ -5,20 +5,55 @@
 <div id="usrinfo">
     <!-- greeting for user-->
     <h1 style = "display:inline-block;"> Welcome back, {{ currentuser.user_name }}!</h1>
-    <div style = "float:right">
+    <!-- <div style = "float:right">
         <form action = '/post/songsearch' method='GET'>
             <button type="submit" class="btn btn-outline-primary" style = "display:inline-block;">Make a post</button>
         </form>
-    </div>
+    </div> -->
     
     <p><em>Where music meets your soul...</em></p> <!-- idk website tagline -->
-    <h3>Check out what you've been missing:</h3>
+    <h4>Check out what you've been missing:</h4>
 </div>
 
-{% for post in posts|reverse %}
-    <div>
-        <a href="/post/{{ post.post_id }}">{{ post.title }}</a>
-    </div>
-{% endfor %}
+    {% for post in posts|reverse %}
+        {% if post.user_id == currentuser.user_id %}
+            <!-- Do nothing -->
+        {% else %}
+
+        <!-- Link the whole div box to go to the individual post -->
+        <a href="/post/{{ post.post_id }}" style="text-decoration: none; color: white;">
+
+            <!-- post information -->
+            <div class="container post">
+                <!-- User details for the post-->
+                <h3 style=" width: fit-content;"> {{ currentuser.user_name }}</h3>
+
+
+                <div class="container" style="margin-top: 15px;">
+                    <!-- post details-->
+
+                    <div class="row" style="background-color: white; color: black; padding-right: 0; margin-right: 10px; ">
+                        <div class="col">
+                            <div class="container">
+                                <!-- area for the song-->
+                                <video width="300px" height="300px" controls poster='{{ post.song_image }}'>
+                                    <source src="{{ post.song_link }}" type= 'audio/mp3' style="background-color: black">
+                                </video>
+        
+                                <h5> {{ post.song_name }}</h5>
+                                <h6> {{ post.song_artists }}</h6>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <h4> {{ post.title }}</h4>
+                            <p> {{ post.caption }}</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </a>
+        {% endif %}
+    {% endfor %}
 
 {% endblock %}
