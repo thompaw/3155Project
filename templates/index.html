@@ -1,41 +1,87 @@
-{% extends '_layout.html' %}
+{% extends '_layout2.html' %}
 
-{% block title %}WIPM{% endblock %}
+{% block title %}SPLOT{% endblock %}
 
 {% block body %}
-<div class="container">
-    <div id="usrinfo">
-        <!-- greeting for user-->
-        <h1> Hey, {{ user['name'] }} !</h1>
-        <p><em>Where music meets your soul...</em></p> <!-- idk website tagline -->
-    </div>
-    <div class="container" id="postfeed">
-        <h3>Check out what you've been missing:</h3>
-        <!-- pull posts from database and put them on the user's homepage-->
-        {% for post in postlist%}
-            <div class="container" id="post">
-                <!-- post information -->
-                <!-- User details for the post-->
-                <h3> {{ user['name'] }}</h3>
-                <p> {{ user['status'] }}</p>
 
-                <div class="container">
-                    <!-- post details-->
-                    <h3> {{ post['title'] }}</h3>
-                    <br>
-                    <p> {{ post['caption'] }}</p>
-
-                    <div class="container">
-                        <!-- area for the song-->
-                        <h1> {{ song['title'] }}</h1>
-                        <h4> {{ song['artist'] }}</h4>
-                        <!-- placeholder for music details-->
-                        <a href="{{ song['link'] }}">Link to the song</a>
-                    </div>
-
-                </div>
+    <!--prompt user to login-->
+    <h1 class="mb-3">Welcome to SPLOT</h1>
+    <p>Please log in or sign up to talk about all the good tunes out today</p>
+        
+    <!--signin and signup buttons-->
+    <div class="container" style="margin-top: 30%; width: 500px; background-color: gray;">
+        <div class="row">
+            <!--signup button-->
+            <div class="col">
+                <form action="/signup" method="GET">
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                </form>
             </div>
-        {% endfor %}
+            
+            <!--signin button-->
+            <div class="col">
+                <form action="/signin" method="GET"> 
+                    <button type="submit" class="btn btn-primary">Sign In</button>
+                </form>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col">
+                <script src="https://apis.google.com/js/platform.js" async defer></script>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+                <meta name="google-signin-client_id" content="912544824526-5tv415qgqhecnatj1cgudd09cklel7vq.apps.googleusercontent.com">
+
+                <div class="g-signin2" data-onsuccess="onSignIn" ></div>
+                
+                <form action="/in" method="POST">
+                    <input type="hidden" id="input" name="input" value="" >
+                </form>
+
+                <script name = "info">
+                    function onSignIn(googleUser) {
+                        var data = googleUser.getAuthResponse().id_token;
+                        var profile = googleUser.getBasicProfile();
+                        var name = profile.getName();
+                        var email = profile.getEmail();
+                        var img = profile.getImageUrl();
+
+                        document.getElementById("input").value = data;
+                        
+
+                        var auth2 = gapi.auth2.getAuthInstance();
+                        auth2.signOut().then(function () {
+                        });
+
+                        $.ajax({
+                            type : "POST",
+                            url : '/google/in',
+                            dataType : 'json',
+                            data : JSON.stringify({
+                                googleIdToken : email
+                            }),
+                            contentType : 'application/json',
+
+                            // if a gmail account is selected
+                            success: function(response) {
+                                // if the account is already made then start session and go home
+                                if(response == '1'){
+                                    window.location.pathname = "/home";
+                                    return;
+                                }
+                                
+                                // if the account is not made then direct to the google signup page
+                                window.location.pathname = "/google/signup";
+                            },
+                        })
+                    }
+                    
+                </script>
+            </div>
+
+
+
+        </div>
     </div>
-</div>
+
 {% endblock %}

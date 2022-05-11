@@ -1,31 +1,45 @@
-{% extends '_layout.html' %}
+{% extends '_layout2.html' %}
 
-{% block title %}{% endblock %}
+{% block title %}SPLOT || Sign in{% endblock %}
 
 {% block body %}
 
 <div class="container">
+
     <div class="row align-items-start">
-        <div class="col" >
-            <br><br><br><br><br><br><br><br><br><br>
-            <h2>Sign in:</h2>
-            <form autocomplete="off">
-                <div class="mb-3" style = "width:80%">
-                    <input type="text" class="form-control" name="username" id="exampleFormControlInput1" placeholder="Username" style="border-color:Black">
+
+        <!--sigin form-->
+        <div class="col">
+
+            <h1>Lets get this party rocking!</h1>
+            <h3>Sign back into the action</h3>
+            
+            <form action="/signin" method="POST">
+                <!--Username field-->
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="username" id="username" placeholder="Username" autocomplete="off">
                 </div>
-                <div class="mb-3" style = "width:80%">
-                    <input type="password" class="form-control" name="username" id="exampleFormControlInput1" placeholder="Password" style="border-color:Black">
+
+                <!--Password field-->
+                <div class="mb-3">
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Password" autocomplete="off">
                 </div>
+
+                <!--login button-->
+                <button type="submit" class="btn btn-outline-primary">Sign in</button>
+                <br>
+
+                <!--Go to signup page-->
+                <a href="/signup" class="link-secondary">Don't have an account?</a>
             </form>
         </div>
-        <div class="col">
-            <img src="static/assets/icons.png"  alt="Icon Image">
+
+        <!--website image-->
+        <div class="col-md-auto">
+            <img src="static/assets/icons.png" alt="Icon Image" style="width: 95%;">
         </div>
+
     </div>
+
 </div>
-
-
-
-
-
 {% endblock %}
