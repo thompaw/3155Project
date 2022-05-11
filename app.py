@@ -19,7 +19,7 @@ bcrypt = Bcrypt(app)
 load_dotenv()
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('CLEARDB_DATABASE_URL', 'sqlite:///test.db')
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('CLEARDB_DATABASE_URL', 'sqlite:///test.db')
 
 engine = sqlalchemy.engine.URL.create(   #This is just the URI but separated. It all combines into variable engine.
     drivername="mysql",
@@ -29,7 +29,7 @@ engine = sqlalchemy.engine.URL.create(   #This is just the URI but separated. It
     port = "3306",
     database="Project"
 )
-# app.config['SQLALCHEMY_DATABASE_URI'] = engine
+app.config['SQLALCHEMY_DATABASE_URI'] = engine
 
 app.config['SQLALCHEMY_TRACK_MODRIFICATIONS'] = False
 app.secret_key = os.getenv('SECRET_KEY')
