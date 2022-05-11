@@ -1,18 +1,18 @@
 {% extends '_layout.html' %}
 
-{% block title %}{{user.user_name}}'s Profile{% endblock %}
+{% block title %}{{user.user_name}}'s Profile || SPLOT{% endblock %}
 
 
 {% block body %}
 
-<div class="container" style="background-color: rgba(218, 218, 218, 0.486);">
+<div class="container" style="background-color: rgb(17, 17, 17); margin-top: 5%;">
     <!--Row contains basic user information (picture, name, followers, etc.)-->
     <div class="row my-2">
         <div class="col-md-4"></div>
-        <div class="col-md-4" style="background-color: rgb(167, 163, 163);">
+        <div class="col-md-4" style="background-color: rgba(33, 33, 33, 0.856);">
             <!--Insert the user profile picture *-->
             <div class="text-center my-2">
-                <img src="/static/assets/default-profile-icon.jpg" class="rounded" alt="Default profile picture." style="width: 50%;">
+                <img src="/static/assets/default-profile-icon.jpg" class="rounded" alt="Default profile picture." style="width: 50%; margin-top: 10px;">
             </div>
 
 
@@ -48,7 +48,7 @@
             </div>
 
         </div>
-        <div class="col-md-4"></div>
+        <div class="row-md-4"></div>
     </div>
 
     {% if user.user_id != user_in_session %}
@@ -66,19 +66,19 @@
     {% endif %}
 
     <!--user biography-->
-    <div class="row my-2">
+    <div class="row my-2 ">
         <div class="col-md-4"></div>
-        <div class="col-md-4" style="background-color: rgb(167, 163, 163);">
+        <div class="col-md-4" style="background-color: rgba(33, 33, 33, 0.856);">
             <div class="row my-1">
             </div>
             <div class="row my-1">
 
-                {% if user.user_biography == 'None' %}
+                {% if user.user_biography == None %}
                     <p class="text-center">
                         No bio yet. Add one!
                     </p>
                 {% else %}
-                    <p class="text-center">
+                    <p class="text-center" style="padding-right: 15px; padding-left: 15px;">
                         {{ user.user_biography }}
                     </p>
                 {% endif %}
@@ -97,23 +97,30 @@
         <div class="col-md-4">
         </div>
 
-        <div class="col-md-4">
-            <div class="d-grid gap-2 d-md-block text-center">
-
-                <!--logout button-->
-                <form action="/logout" method = 'POST'>
-                    <button type="submit" class="btn btn-danger">Logout</button>
-                </form>
-
-                <!--delete profile button-->
-                <form action="/user_profile/{{ user.user_id }}/delete" method = 'POST'>
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-
-                <!--edit profile button-->
-                <form action="/user_profile/{{ user.user_id }}/edit" method = 'GET'>
-                    <button type="submit" class="btn btn-outline-primary">Edit</button>
-                </form>
+        <div class="col-md-4" style="background-color: rgba(33, 33, 33, 0.856);">
+            <div>
+                <table style="margin-right: auto; margin-left:auto;">
+                    <tr>
+                        <td>
+                             <!--logout button-->
+                            <form action="/logout" method = 'POST'>
+                                <button type="submit" class="btn btn-primary" style="width: 95px; margin-left: 10px; margin-right: 10px;">Logout</button>
+                            </form>
+                        </td>
+                        <td>
+                            <!--edit profile button-->
+                            <form action="/user_profile/{{ user.user_id }}/edit" method = 'GET'>
+                                <button type="submit" class="btn btn-primary" style="width: 95px; margin-left: 10px; margin-right: 10px;">Edit</button>
+                            </form>
+                        </td>
+                        <td>
+                           <!--delete profile button-->
+                            <form action="/user_profile/{{ user.user_id }}/delete" method = 'POST'>
+                                <button type="submit" class="btn btn-danger" style="width: 95px; margin-left: 10px; margin-right: 10px;">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
 
             </div>
         </div>
