@@ -1,6 +1,7 @@
 # Implement all CRUD elements
 # Reference this: https://github.com/jacobtie/itsc-3155-module-10-demo/blob/main/blueprints/book_blueprint.py
 from flask import Blueprint, abort, redirect, render_template, request, session
+from sqlalchemy import null
 from models import Comment, Post, Userprofile, db
 import spot
 
@@ -9,7 +10,16 @@ router = Blueprint('Post_router', __name__, url_prefix='/post')
 @router.get('') #TODO: output all posts in reverse order for main feed
 def get_all_Post():
     all_posts = Post.query.all()
-    return render_template('all_posts.html', posts = all_posts, user_in_session = session['user']['user_id'], currentuser = Userprofile.query.get(session['user']['user_id']))
+    
+    users = []
+    for post in all_posts:
+        users.append(Userprofile.query.get(post.user_id))
+        print(post.user_id)
+    
+    all_posts.reverse()
+    users.reverse()
+    
+    return render_template('all_posts.html', posts = all_posts, user_in_session = session['user']['user_id'], currentuser = Userprofile.query.get(session['user']['user_id']), users=users)
 
 @router.get('/<post_id>') #TODO: output single post
 def get_single_Post(post_id):

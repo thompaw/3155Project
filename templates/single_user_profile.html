@@ -57,8 +57,8 @@
             <div class="col-md-4"></div>
             <div class="col-md-4">
                 <div class="d-grid gap-2 d-md-block text-center">
-                    <button class="btn btn-outline-primary" type="button" action="#">Follow</button>
-                    <button class="btn btn-outline-primary" type="button" action="#">Message</button>
+                    <button class="btn btn-outline-primary" type="button"  style="width: 95px; margin-left: 10px; margin-right: 10px;" action="#">Follow</button>
+                    <button class="btn btn-outline-primary" type="button"  style="width: 95px; margin-left: 10px; margin-right: 10px;" action="#">Message</button>
                 </div>
             </div>
             <div class="col-md-4"></div>
@@ -104,19 +104,19 @@
                         <td>
                              <!--logout button-->
                             <form action="/logout" method = 'POST'>
-                                <button type="submit" class="btn btn-primary" style="width: 95px; margin-left: 10px; margin-right: 10px;">Logout</button>
+                                <button type="submit" class="btn btn-outline-primary" style="width: 95px; margin-left: 10px; margin-right: 10px;">Logout</button>
                             </form>
                         </td>
                         <td>
                             <!--edit profile button-->
                             <form action="/user_profile/{{ user.user_id }}/edit" method = 'GET'>
-                                <button type="submit" class="btn btn-primary" style="width: 95px; margin-left: 10px; margin-right: 10px;">Edit</button>
+                                <button type="submit" class="btn btn-outline-primary" style="width: 95px; margin-left: 10px; margin-right: 10px;">Edit</button>
                             </form>
                         </td>
                         <td>
                            <!--delete profile button-->
                             <form action="/user_profile/{{ user.user_id }}/delete" method = 'POST'>
-                                <button type="submit" class="btn btn-danger" style="width: 95px; margin-left: 10px; margin-right: 10px;">Delete</button>
+                                <button type="submit" class="btn btn-outline-danger" style="width: 95px; margin-left: 10px; margin-right: 10px;">Delete</button>
                             </form>
                         </td>
                     </tr>
